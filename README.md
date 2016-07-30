@@ -70,12 +70,20 @@ ALRT.create(.Alert, title: "Login", message: "Please enter your credentials")
 
 ## Installation
 ### Cocoapods
+Add to your Podfile and run pod install.
 
 ```
+platform :ios, '8.0'
+use_frameworks!
 pod "ALRT"
 ```
 
 ### Carthage
+Just add to your Cartfile
+
+```
+github "mshrwtnb/ALRT"
+```
 
 ## Documentation
 * [Full Documentation](https://mshrwtnb.github.io/ALRT/Classes/ALRT.html)
