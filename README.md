@@ -69,9 +69,13 @@ ALRT.create(.Alert, title: "Login", message: "Please enter your credentials")
 * iOS 8.0 or later
 
 ## Installation
+### Cocoapods
+
 ```
 pod "ALRT"
 ```
+
+### Carthage
 
 ## Documentation
 * [Full Documentation](https://mshrwtnb.github.io/ALRT/Classes/ALRT.html)
