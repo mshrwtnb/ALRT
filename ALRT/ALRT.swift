@@ -9,6 +9,7 @@ import UIKit
 
 public class ALRT {
     private init(){}
+    
     public class func create(style: UIAlertControllerStyle,
                              title: String?,
                              message: String?) -> ALRTTask {

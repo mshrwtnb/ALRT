@@ -42,38 +42,47 @@ public class ALRTTask {
     
     public func addAction(title: String?,
                           style: UIAlertActionStyle = .Default,
+                          preferred: Bool = false,
                           handler: ((action: UIAlertAction, textFields: [UITextField]?) -> Void)? = nil) -> Self {
         
-        alert.addAction(UIAlertAction(title: title, style: style){
-            action in
-            
+        let action = UIAlertAction(title: title, style: style){ action in
             handler?(action: action, textFields: self.alert.preferredStyle == .Alert ? self.alert.textFields : nil)
             self.alert = nil
-            
-            })
+        }
+        
+        alert.addAction(action)
+        
+        if #available(iOS 9.0, *) {
+            if preferred {
+                alert.preferredAction = action
+            }
+        }
         
         return self
     }
     
     public func addOK(title: String = "OK",
                       style: UIAlertActionStyle = .Default,
+                      preferred: Bool = false,
                       handler:((action: UIAlertAction, textFields: [UITextField]?) -> Void)? = nil) -> Self {
         
-        return addAction(title, style: style, handler: handler)
+        return addAction(title, style: style, preferred: preferred, handler: handler)
     }
     
     public func addCancel(title: String = "Cancel",
                           style: UIAlertActionStyle = .Cancel,
+                          preferred: Bool = false,
                           handler: ((action: UIAlertAction, textFields: [UITextField]?) -> Void)? = nil) -> Self {
         
-        return addAction(title, style: style, handler: handler)
+        return addAction(title, style: style, preferred: preferred, handler: handler)
     }
     
     public func addDestructive(title: String?,
                                style: UIAlertActionStyle = .Destructive,
+                               preferred: Bool = false,
                                handler: ((action: UIAlertAction, textFields: [UITextField]?) -> Void)? = nil)-> Self {
         
-        return addAction(title, style: style, handler: handler)
+        return addAction(title, style: style, preferred: preferred, handler: handler)
     }
     
     // MARK: Popover
