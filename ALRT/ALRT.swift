@@ -216,7 +216,7 @@ public class ALRT {
             
             ALRT.create(.Alert,
                         title: "To developer",
-                        message: "Implement addPopoverPresentation for iPad. Otherwise app will crash.")
+                        message: "Implement configurePopoverPresentation for iPad. Otherwise app will crash.")
                 .addOK()
                 .show()
             
