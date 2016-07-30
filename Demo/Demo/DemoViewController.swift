@@ -26,18 +26,15 @@ class DemoViewController: UIViewController {
     func didTapButton(sender: UIBarButtonItem){
         
         ALRT.create(.Alert, title: "Login", message: "Please enter your credentials")
-            .addTextField {
-                textField in
+            .addTextField { textField in
                 textField.placeholder = "Username"
             }
-            .addTextField {
-                textField in
+            .addTextField { textField in
                 textField.placeholder = "Password"
                 textField.secureTextEntry = true
             }
             .addCancel()
-            .addOK() {
-                alert, textFields in
+            .addOK() { alert, textFields in
                 textFields?
                     .flatMap { (placeholder: $0.placeholder ?? "No Placeholder", text: $0.text ?? "No Text") }
                     .forEach { print("\($0.placeholder) => \($0.text)") }

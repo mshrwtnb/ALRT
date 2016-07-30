@@ -23,7 +23,7 @@ public class ALRTTask {
     
     // MARK: TextField
     
-    public func addTextField(configurationHandler: ((UITextField) -> Void)?) -> Self{
+    public func addTextField(configurationHandler: ((textField: UITextField) -> Void)?) -> Self{
         guard alert.preferredStyle == .Alert else {
             return self
         }
@@ -31,7 +31,7 @@ public class ALRTTask {
         alert.addTextFieldWithConfigurationHandler {
             textField in
             if let configurationHandler = configurationHandler {
-                configurationHandler(textField)
+                configurationHandler(textField: textField)
             }
         }
         
@@ -42,12 +42,12 @@ public class ALRTTask {
     
     public func addAction(title: String?,
                           style: UIAlertActionStyle = .Default,
-                          handler: ((UIAlertAction, [UITextField]?) -> Void)? = nil) -> Self {
+                          handler: ((action: UIAlertAction, textFields: [UITextField]?) -> Void)? = nil) -> Self {
         
         alert.addAction(UIAlertAction(title: title, style: style){
             action in
             
-            handler?(action, self.alert.preferredStyle == .Alert ? self.alert.textFields : nil)
+            handler?(action: action, textFields: self.alert.preferredStyle == .Alert ? self.alert.textFields : nil)
             self.alert = nil
             
             })
@@ -57,31 +57,30 @@ public class ALRTTask {
     
     public func addOK(title: String = "OK",
                       style: UIAlertActionStyle = .Default,
-                      handler:((UIAlertAction, [UITextField]?) -> Void)? = nil) -> Self {
+                      handler:((action: UIAlertAction, textFields: [UITextField]?) -> Void)? = nil) -> Self {
         
         return addAction(title, style: style, handler: handler)
     }
     
     public func addCancel(title: String = "Cancel",
                           style: UIAlertActionStyle = .Cancel,
-                          handler: ((UIAlertAction, [UITextField]?) -> Void)? = nil) -> Self {
+                          handler: ((action: UIAlertAction, textFields: [UITextField]?) -> Void)? = nil) -> Self {
         
         return addAction(title, style: style, handler: handler)
     }
     
     public func addDestructive(title: String?,
                                style: UIAlertActionStyle = .Destructive,
-                               handler: ((UIAlertAction, [UITextField]?) -> Void)? = nil) -> Self {
+                               handler: ((action: UIAlertAction, textFields: [UITextField]?) -> Void)? = nil)-> Self {
         
         return addAction(title, style: style, handler: handler)
     }
     
     // MARK: Popover
     
-    public func setPopoverPresentationController(sourceView: UIView? = nil, sourceRect: CGRect) -> Self {
+    public func addPopoverPresentation(configurationHandler:((popover: UIPopoverPresentationController?) -> Void)? = nil) -> Self {
         
-        alert.popoverPresentationController?.sourceView = sourceView
-        alert.popoverPresentationController?.sourceRect = sourceRect
+        configurationHandler?(popover:alert.popoverPresentationController)
         
         return self
     }
@@ -91,6 +90,21 @@ public class ALRTTask {
     public func show(viewController: UIViewController? = nil,
                      animated: Bool = true,
                      completion: (() -> Void)? = nil){
+        
+        // Avoid causing a crash
+        if UIDevice.currentDevice().userInterfaceIdiom == .Pad &&
+            alert.preferredStyle == .ActionSheet &&
+            alert.popoverPresentationController?.sourceView == nil &&
+            alert.popoverPresentationController?.barButtonItem == nil {
+            
+            ALRT.create(.Alert,
+                        title: "To developer",
+                        message: "Implement addPopoverPresentation for iPad. Otherwise app will crash.")
+                .addOK()
+                .show()
+            
+            return
+        }
         
         if let viewController = viewController {
             viewController.presentViewController(self.alert, animated: animated, completion: completion)
