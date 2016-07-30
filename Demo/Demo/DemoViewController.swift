@@ -47,7 +47,7 @@ class DemoViewController: UIViewController {
         } else if title == ActionTitle.ActionSheet.rawValue {
             
             ALRT.create(.ActionSheet, title: "Destination", message: "Please select your destination")
-                .addPopoverPresentation {
+                .configurePopoverPresentation {
                     // implement popover.barButtonItem or popover.sourceView for iPad
                     popover in
                     popover?.barButtonItem = sender
@@ -74,7 +74,7 @@ class DemoViewController: UIViewController {
                         .flatMap { (placeholder: $0.placeholder ?? "No Placeholder", text: $0.text ?? "No Text") }
                         .forEach { print("\($0.placeholder) => \($0.text)") }
                 }
-                .show() { print("Alert has been shown") }
+                .show() { print("Login alert has been shown") }
             
         }
     }
