@@ -39,7 +39,6 @@ class DemoViewController: UIViewController {
         }
         
         if title == ActionTitle.Alert.rawValue {
-            
             ALRT.create(.Alert, title: "Error", message: "No item found")
                 .addOK()
                 .addAction("No Way!", preferred: true) // preferredAction is available iOS 9.0 or later

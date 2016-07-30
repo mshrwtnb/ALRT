@@ -12,8 +12,7 @@
 		DF17F7E51D4C18DE001DF68B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DF17F7E31D4C18DE001DF68B /* Main.storyboard */; };
 		DF17F7E71D4C18DE001DF68B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DF17F7E61D4C18DE001DF68B /* Assets.xcassets */; };
 		DF17F7EA1D4C18DE001DF68B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DF17F7E81D4C18DE001DF68B /* LaunchScreen.storyboard */; };
-		DF17F7FF1D4C228F001DF68B /* ALRT.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF17F7FC1D4C228F001DF68B /* ALRT.swift */; };
-		DF17F8001D4C228F001DF68B /* ALRTTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF17F7FD1D4C228F001DF68B /* ALRTTask.swift */; };
+		DF17F8001D4C228F001DF68B /* ALRT.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF17F7FD1D4C228F001DF68B /* ALRT.swift */; };
 		DF17F8011D4C228F001DF68B /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DF17F7FE1D4C228F001DF68B /* Info.plist */; };
 /* End PBXBuildFile section */
 
@@ -26,8 +25,7 @@
 		DF17F7E91D4C18DE001DF68B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DF17F7EB1D4C18DE001DF68B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DF17F7FB1D4C228F001DF68B /* ALRT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALRT.h; sourceTree = "<group>"; };
-		DF17F7FC1D4C228F001DF68B /* ALRT.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ALRT.swift; sourceTree = "<group>"; };
-		DF17F7FD1D4C228F001DF68B /* ALRTTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ALRTTask.swift; sourceTree = "<group>"; };
+		DF17F7FD1D4C228F001DF68B /* ALRT.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ALRT.swift; sourceTree = "<group>"; };
 		DF17F7FE1D4C228F001DF68B /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -76,8 +74,7 @@
 			isa = PBXGroup;
 			children = (
 				DF17F7FB1D4C228F001DF68B /* ALRT.h */,
-				DF17F7FC1D4C228F001DF68B /* ALRT.swift */,
-				DF17F7FD1D4C228F001DF68B /* ALRTTask.swift */,
+				DF17F7FD1D4C228F001DF68B /* ALRT.swift */,
 				DF17F7FE1D4C228F001DF68B /* Info.plist */,
 			);
 			name = ALRT;
@@ -157,10 +154,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DF17F7FF1D4C228F001DF68B /* ALRT.swift in Sources */,
 				DF17F7E21D4C18DE001DF68B /* DemoViewController.swift in Sources */,
 				DF17F7E01D4C18DE001DF68B /* AppDelegate.swift in Sources */,
-				DF17F8001D4C228F001DF68B /* ALRTTask.swift in Sources */,
+				DF17F8001D4C228F001DF68B /* ALRT.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
