@@ -48,7 +48,7 @@ class DemoViewController: UIViewController {
             
             ALRT.create(.ActionSheet, title: "Destination", message: "Please select your destination")
                 .configurePopoverPresentation {
-                    // implement popover.barButtonItem or popover.sourceView for iPad
+                    // set popover.barButtonItem or popover.sourceView for iPad
                     popover in
                     popover?.barButtonItem = sender
                 }
