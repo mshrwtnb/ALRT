@@ -30,6 +30,7 @@ class DemoViewController: UIViewController {
         
         self.navigationController?.setToolbarHidden(false, animated: false)
         self.setToolbarItems(items, animated: false)
+        
     }
     
     func didTapButton(sender: UIBarButtonItem){
@@ -57,10 +58,10 @@ class DemoViewController: UIViewController {
                 .addAction("London")
                 .addDestructive("Not interested")
                 .show()
-            
+       
         } else if title == ActionTitle.Login.rawValue {
             
-            ALRT.create(.Alert, title: "Login", message: "Please enter your credentials")
+            ALRT.create(.ActionSheet, title: "Login", message: "Please enter your credentials")
                 .addTextField { textField in
                     textField.placeholder = "Username"
                 }
@@ -74,8 +75,15 @@ class DemoViewController: UIViewController {
                         .flatMap { (placeholder: $0.placeholder ?? "No Placeholder", text: $0.text ?? "No Text") }
                         .forEach { print("\($0.placeholder) => \($0.text)") }
                 }
-                .show() { print("Login alert has been shown") }
-            
+                .show(completion: { result in
+                    switch result {
+                    case .Success:
+                        print("The alert is displayed.")
+                        
+                    case .Failure(let error):
+                        print("The alert is not displayed. Error => \(error)")
+                    }
+                })
         }
     }
     

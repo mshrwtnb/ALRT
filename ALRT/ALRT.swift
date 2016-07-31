@@ -7,6 +7,30 @@
 
 import UIKit
 
+/**
+ Result indicating whether the alert is displayed or not.
+ 
+ - Success: The alert is displayed.
+ - Failure: The alert is not displayed due to some reasons.
+ */
+
+public enum Result <ErrorType> {
+    case Success
+    case Failure(Error: ALRTError)
+}
+
+/**
+ ALRTError enums.
+ 
+ - AlertControllerNil: The alert controller is nil.
+ - PopoverNotSet: An attempt to show .ActionSheet type alert controller failed because the popover presentation controller has not been set up.
+ */
+
+public enum ALRTError: ErrorType {
+    case AlertControllerNil
+    case PopoverNotSet
+}
+
 /// Responsible for creating and managing an ALRT object.
 
 public class ALRT {
@@ -197,37 +221,36 @@ public class ALRT {
      
      - parameter viewControllerToPresent: The view controller to display the alert from. The default value is nil. If the parameter is not given, the key window's root view controller will present the alert.
      - parameter animated:       Pass true to animate the presentation; otherwise, pass false. The default value is true.
-     - parameter completion:     The block to execute after the presentation finishes. This block has no return value and takes no parameters. The default value is nil.
+     - parameter completion:     The block to execute after the presentation finishes. This block has no return value and takes an Result parameter. The default value is nil.
      */
     
     public func show(viewControllerToPresent: UIViewController? = nil,
                      animated: Bool = true,
-                     completion: (() -> Void)? = nil){
+                     completion: ((result: Result<ALRTError>) -> Void)? = nil) {
         
         guard let alert = self.alert else {
+            completion?(result: Result.Failure(Error: ALRTError.AlertControllerNil))
             return
         }
         
-        // Avoid causing a crash
         if UIDevice.currentDevice().userInterfaceIdiom == .Pad &&
             alert.preferredStyle == .ActionSheet &&
             alert.popoverPresentationController?.sourceView == nil &&
             alert.popoverPresentationController?.barButtonItem == nil {
-            
-            ALRT.create(.Alert,
-                        title: "To developer",
-                        message: "Implement configurePopoverPresentation for iPad. Otherwise app will crash.")
-                .addOK()
-                .show()
-            
+            completion?(result: Result.Failure(Error: ALRTError.PopoverNotSet))
             return
         }
         
         if let viewController = viewControllerToPresent {
-            viewController.presentViewController(alert, animated: animated, completion: completion)
+            viewController.presentViewController(alert, animated: animated, completion: { () in
+                completion?(result: Result.Success)
+            })
+            
         } else {
             let rootViewController = UIApplication.sharedApplication().keyWindow?.rootViewController
-            rootViewController?.presentViewController(alert, animated: animated, completion: completion)
+            rootViewController?.presentViewController(alert, animated: animated, completion: { () in
+                completion?(result: Result.Success)
+            })
         }
     }
 }
