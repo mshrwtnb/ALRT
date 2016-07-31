@@ -7,8 +7,9 @@ Similar snippets will no longer mess up your project.
 ## Features
 * Call-site-friendly. See Usages
 * Chainable UIAlertController setup both Alert and ActionSheet styles
-* Add UITextField(s) and handle when a certain UIAlertAction button is clicked
-* Preferred Action Support!
+* Add UITextField(s) and handle their values when a certain UIAlertAction button is clicked
+* Preferred Action Support
+* Can handle the result of show() action both .Success and .Failure
 
 ## Usages
 ### Alert with OK / Cancel buttons
@@ -32,36 +33,40 @@ ALRT.create(.ActionSheet, title: "Destination", message: "Please select your des
         popover in
         popover?.barButtonItem = sender
     }
-    .addAction("New York") {
-        action, textFields in
-        print("New York has been selected")
-    }
+    .addAction("New York") { action, textFields in print("New York has been selected") }
     .addAction("Paris")
     .addAction("London")
     .addDestructive("Not interested")
-    .show() {
-        print("Actionsheet has been shown!")
-    }
+    .show()
 ```
 ### Alert with two textfields
 UIAlertController.textFields can be accessed asynchronously right after the OK button is tapped.
+Also you are able to know if the alert or action sheet is displayed or not.
 
 ```swift
 ALRT.create(.Alert, title: "Login", message: "Please enter your credentials")
-    .addTextField { textField in
-        textField.placeholder = "Username"
-    }
-    .addTextField { textField in
-        textField.placeholder = "Password"
-        textField.secureTextEntry = true
-    }
-    .addCancel()
-    .addOK() { alert, textFields in
-        textFields?
-            .flatMap { (placeholder: $0.placeholder ?? "No Placeholder", text: $0.text ?? "No Text") }
-            .forEach { print("\($0.placeholder) => \($0.text)") }
-    }
-    .show()
+     .addTextField { textField in
+         textField.placeholder = "Username"
+     }
+     .addTextField { textField in
+         textField.placeholder = "Password"
+         textField.secureTextEntry = true
+     }
+     .addCancel()
+     .addOK() { alert, textFields in
+         textFields?
+             .flatMap { (placeholder: $0.placeholder ?? "No Placeholder", text: $0.text ?? "No Text") }
+             .forEach { print("\($0.placeholder) => \($0.text)") }
+     }
+     .show(completion: { result in
+         switch result {
+         case .Success:
+             print("The alert is displayed.")
+
+         case .Failure(let error):
+             print("The alert is not displayed. Error => \(error)")
+         }
+     })
 ```
 
 ## Requirements
@@ -79,11 +84,11 @@ pod "ALRT"
 ```
 
 ### Carthage
-Just add to your Cartfile
+Add to your Cartfile.
 
 ```
 github "mshrwtnb/ALRT"
 ```
 
 ## Documentation
-* [Full Documentation](http://cocoadocs.org/docsets/ALRT/0.1/)
+* [Full Documentation](http://cocoadocs.org/docsets/ALRT/0.2/)

@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "ALRT"
-  s.version      = "0.1"
+  s.version      = "0.2"
   s.summary      = "ALRT is a call-site-friendly UIAlertController framework."
   s.description  = <<-DESC
                      ALRT aims to be an AL(R)Ternative to tedious UIAlertController implementation process.
@@ -8,6 +8,7 @@ Pod::Spec.new do |s|
                      - Chainable UIAlertController setup both Alert and ActionSheet styles
                      - Add UITextField(s) and handle when a certain UIAlertAction button is clicked
                      - Preferred Action Support
+                     - Can handle the result of show() action both .Success and .Failure
                      DESC
 
   s.homepage     = "https://github.com/mshrwtnb/ALRT"
