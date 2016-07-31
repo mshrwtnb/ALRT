@@ -61,7 +61,7 @@ class DemoViewController: UIViewController {
        
         } else if title == ActionTitle.Login.rawValue {
             
-            ALRT.create(.ActionSheet, title: "Login", message: "Please enter your credentials")
+            ALRT.create(.Alert, title: "Login", message: "Please enter your credentials")
                 .addTextField { textField in
                     textField.placeholder = "Username"
                 }
