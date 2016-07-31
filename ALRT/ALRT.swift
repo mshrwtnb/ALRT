@@ -231,13 +231,7 @@ public class ALRT {
                      completion: ((result: Result<ALRTError>) -> Void)? = nil) {
         
         do {
-            let result = try preemptiveResult()
-            
-            let viewController = viewControllerToPresent ?? UIApplication.sharedApplication().keyWindow?.rootViewController
-            
-            viewController?.presentViewController(alert!, animated: animated, completion: { _ in
-                completion?(result: result)
-            })
+            try privateShow()
         }
         catch ALRTError.AlertControllerNil {
             completion?(result: .Failure(Error: ALRTError.AlertControllerNil))
@@ -250,7 +244,10 @@ public class ALRT {
         }
     }
     
-    private func preemptiveResult() throws -> Result<ALRTError> {
+    private func privateShow(viewControllerToPresent: UIViewController? = nil,
+                             animated: Bool = true,
+                             completion: ((result: Result<ALRTError>) -> Void)? = nil) throws {
+        
         guard let alert = self.alert else {
             throw ALRTError.AlertControllerNil
         }
@@ -262,6 +259,10 @@ public class ALRT {
             throw ALRTError.PopoverNotSet
         }
         
-        return Result.Success
+        let viewController = viewControllerToPresent ?? UIApplication.sharedApplication().keyWindow?.rootViewController
+        
+        viewController?.presentViewController(alert, animated: animated, completion: { _ in
+            completion?(result: Result.Success)
+        })
     }
 }
