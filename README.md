@@ -79,8 +79,11 @@ Add to your Podfile and run pod install.
 
 ```
 platform :ios, '8.0'
-use_frameworks!
-pod "ALRT"
+
+target YOUR_TARGET do
+  use_frameworks!
+  pod "ALRT"
+end
 ```
 
 ### Carthage
