@@ -24,11 +24,13 @@ public enum Result <ErrorType> {
  
  - AlertControllerNil: The alert controller is nil.
  - PopoverNotSet: An attempt to show .ActionSheet type alert controller failed because the popover presentation controller has not been set up.
+ - Unknown: Unknown Error
  */
 
 public enum ALRTError: ErrorType {
     case AlertControllerNil
     case PopoverNotSet
+    case Unknown
 }
 
 /// Responsible for creating and managing an ALRT object.
@@ -228,29 +230,38 @@ public class ALRT {
                      animated: Bool = true,
                      completion: ((result: Result<ALRTError>) -> Void)? = nil) {
         
+        do {
+            let result = try preemptiveResult()
+            
+            let viewController = viewControllerToPresent ?? UIApplication.sharedApplication().keyWindow?.rootViewController
+            
+            viewController?.presentViewController(alert!, animated: animated, completion: { _ in
+                completion?(result: result)
+            })
+        }
+        catch ALRTError.AlertControllerNil {
+            completion?(result: .Failure(Error: ALRTError.AlertControllerNil))
+        }
+        catch ALRTError.PopoverNotSet {
+            completion?(result: .Failure(Error: ALRTError.PopoverNotSet))
+        }
+        catch {
+            completion?(result: .Failure(Error: ALRTError.Unknown))
+        }
+    }
+    
+    private func preemptiveResult() throws -> Result<ALRTError> {
         guard let alert = self.alert else {
-            completion?(result: Result.Failure(Error: ALRTError.AlertControllerNil))
-            return
+            throw ALRTError.AlertControllerNil
         }
         
         if UIDevice.currentDevice().userInterfaceIdiom == .Pad &&
             alert.preferredStyle == .ActionSheet &&
             alert.popoverPresentationController?.sourceView == nil &&
             alert.popoverPresentationController?.barButtonItem == nil {
-            completion?(result: Result.Failure(Error: ALRTError.PopoverNotSet))
-            return
+            throw ALRTError.PopoverNotSet
         }
         
-        if let viewController = viewControllerToPresent {
-            viewController.presentViewController(alert, animated: animated, completion: { () in
-                completion?(result: Result.Success)
-            })
-            
-        } else {
-            let rootViewController = UIApplication.sharedApplication().keyWindow?.rootViewController
-            rootViewController?.presentViewController(alert, animated: animated, completion: { () in
-                completion?(result: Result.Success)
-            })
-        }
+        return Result.Success
     }
 }
