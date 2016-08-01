@@ -14,9 +14,9 @@ import UIKit
  - Failure: The alert is not displayed due to some reasons.
  */
 
-public enum Result <ErrorType> {
+public enum Result <ET where ET: ErrorType> {
     case Success
-    case Failure(Error: ALRTError)
+    case Failure(Error: ET)
 }
 
 /**
