@@ -10,22 +10,22 @@ import UIKit
 
 class DemoViewController: UIViewController {
     private enum ActionTitle: String {
-        case Alert
-        case ActionSheet
-        case Login
+        case alert
+        case actionSheet
+        case login
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         let items = [
-            UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil),
-            UIBarButtonItem(title: ActionTitle.Alert.rawValue, style: .Plain, target: self, action: #selector(DemoViewController.didTapButton(_:))),
-            UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil),
-            UIBarButtonItem(title: ActionTitle.ActionSheet.rawValue, style: .Plain, target: self, action: #selector(DemoViewController.didTapButton(_:))),
-            UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil),
-            UIBarButtonItem(title: ActionTitle.Login.rawValue, style: .Plain, target: self, action: #selector(DemoViewController.didTapButton(_:))),
-            UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil),
+            UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
+            UIBarButtonItem(title: ActionTitle.alert.rawValue, style: .plain, target: self, action: #selector(DemoViewController.didTapButton(_:))),
+            UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
+            UIBarButtonItem(title: ActionTitle.actionSheet.rawValue, style: .plain, target: self, action: #selector(DemoViewController.didTapButton(_:))),
+            UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
+            UIBarButtonItem(title: ActionTitle.login.rawValue, style: .plain, target: self, action: #selector(DemoViewController.didTapButton(_:))),
+            UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
         ]
         
         self.navigationController?.setToolbarHidden(false, animated: false)
@@ -33,21 +33,21 @@ class DemoViewController: UIViewController {
         
     }
     
-    func didTapButton(sender: UIBarButtonItem){
+    func didTapButton(_ sender: UIBarButtonItem){
         
         guard let title = sender.title else {
             return
         }
         
-        if title == ActionTitle.Alert.rawValue {
-            ALRT.create(.Alert, title: "Error", message: "No item found")
+        if title == ActionTitle.alert.rawValue {
+            ALRT.create(.alert, title: "Error", message: "No item found")
                 .addOK()
                 .addAction("No Way!", preferred: true) // preferredAction is available iOS 9.0 or later
                 .show()
             
-        } else if title == ActionTitle.ActionSheet.rawValue {
+        } else if title == ActionTitle.actionSheet.rawValue {
             
-            ALRT.create(.ActionSheet, title: "Destination", message: "Please select your destination")
+            ALRT.create(.actionSheet, title: "Destination", message: "Please select your destination")
                 .configurePopoverPresentation {
                     // set popover.barButtonItem or popover.sourceView for iPad
                     popover in
@@ -59,15 +59,15 @@ class DemoViewController: UIViewController {
                 .addDestructive("Not interested")
                 .show()
        
-        } else if title == ActionTitle.Login.rawValue {
+        } else if title == ActionTitle.login.rawValue {
             
-            ALRT.create(.Alert, title: "Login", message: "Please enter your credentials")
+            ALRT.create(.alert, title: "Login", message: "Please enter your credentials")
                 .addTextField { textField in
                     textField.placeholder = "Username"
                 }
                 .addTextField { textField in
                     textField.placeholder = "Password"
-                    textField.secureTextEntry = true
+                    textField.isSecureTextEntry = true
                 }
                 .addCancel()
                 .addOK() { alert, textFields in
@@ -77,10 +77,10 @@ class DemoViewController: UIViewController {
                 }
                 .show(completion: { result in
                     switch result {
-                    case .Success:
+                    case .success:
                         print("The alert is displayed.")
                         
-                    case .Failure(let error):
+                    case .failure(let error):
                         print("The alert is not displayed. Error => \(error)")
                     }
                 })
