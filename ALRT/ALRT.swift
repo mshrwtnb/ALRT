@@ -241,16 +241,16 @@ public class ALRT {
             return
         }
         
-        if let viewController = viewControllerToPresent {
-            viewController.presentViewController(alert, animated: animated, completion: { () in
-                completion?(result: Result.Success)
-            })
-            
-        } else {
-            let rootViewController = UIApplication.sharedApplication().keyWindow?.rootViewController
-            rootViewController?.presentViewController(alert, animated: animated, completion: { () in
-                completion?(result: Result.Success)
-            })
+        let sourceViewController = {  (viewController: UIViewController?) -> UIViewController? in
+            if let navigationController = viewController as? UINavigationController {
+                return navigationController.visibleViewController
+            }
+            return viewController
         }
+        
+        sourceViewController(viewControllerToPresent ?? UIApplication.sharedApplication().keyWindow?.rootViewController)?.presentViewController(alert, animated: animated, completion: { _ in
+            completion?(result: Result.Success)
+        })
+        
     }
 }
