@@ -259,14 +259,15 @@ public class ALRT {
             throw ALRTError.PopoverNotSet
         }
         
-        let sourceViewController = {  (viewController: UIViewController?) -> UIViewController? in
+        let sourceViewController: UIViewController? = {
+            let viewController = viewControllerToPresent ?? UIApplication.sharedApplication().keyWindow?.rootViewController
             if let navigationController = viewController as? UINavigationController {
                 return navigationController.visibleViewController
             }
             return viewController
-        }
+        }()
         
-        sourceViewController(viewControllerToPresent ?? UIApplication.sharedApplication().keyWindow?.rootViewController)?.presentViewController(alert, animated: animated, completion: { _ in
+        sourceViewController?.presentViewController(alert, animated: animated, completion: { _ in
             completion?(result: Result.Success)
         })
         
