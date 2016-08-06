@@ -4,6 +4,10 @@ ALRT is a call-site-friendly UIAlertController framework that aims to be an AL(R
 
 Similar snippets will no longer mess up your project.
 
+## Image
+<img height="300" src="https://media.giphy.com/media/26hirZS4wE6kwpCpy/giphy.gif">
+
+
 ## Features
 * Call-site-friendly. See Usages
 * Chainable UIAlertController setup both Alert and ActionSheet styles
