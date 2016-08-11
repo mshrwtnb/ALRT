@@ -14,7 +14,7 @@ import UIKit
  - failure: The alert is not displayed due to some reasons.
  */
 
-public enum Result <ET where ET: ErrorProtocol> {
+public enum Result <ET where ET: Error> {
     case success
     case failure(Error: ET)
 }
@@ -27,7 +27,7 @@ public enum Result <ET where ET: ErrorProtocol> {
  - unknown: Unknown Error
  */
 
-public enum ALRTError: ErrorProtocol {
+public enum ALRTError: Error {
     case alertControllerNil
     case popoverNotSet
     case unknown
@@ -252,7 +252,7 @@ public class ALRT {
             throw ALRTError.alertControllerNil
         }
         
-        if UIDevice.current().userInterfaceIdiom == .pad &&
+        if UIDevice.current.userInterfaceIdiom == .pad &&
             alert.preferredStyle == .actionSheet &&
             alert.popoverPresentationController?.sourceView == nil &&
             alert.popoverPresentationController?.barButtonItem == nil {
@@ -260,7 +260,7 @@ public class ALRT {
         }
         
         let sourceViewController: UIViewController? = {
-            let viewController = viewControllerToPresent ?? UIApplication.shared().keyWindow?.rootViewController
+            let viewController = viewControllerToPresent ?? UIApplication.shared.keyWindow?.rootViewController
             if let navigationController = viewController as? UINavigationController {
                 return navigationController.visibleViewController
             }
@@ -270,5 +270,6 @@ public class ALRT {
         sourceViewController?.present(alert, animated: animated, completion: { _ in
             completion?(result: Result.success)
         })
+
     }
 }
