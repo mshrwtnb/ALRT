@@ -9,23 +9,23 @@
 import UIKit
 
 class DemoViewController: UIViewController {
-    private enum ActionTitle: String {
-        case Alert
-        case ActionSheet
-        case Login
+    fileprivate enum ActionTitle: String {
+        case alert
+        case actionSheet
+        case login
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         let items = [
-            UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil),
-            UIBarButtonItem(title: ActionTitle.Alert.rawValue, style: .Plain, target: self, action: #selector(DemoViewController.didTapButton(_:))),
-            UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil),
-            UIBarButtonItem(title: ActionTitle.ActionSheet.rawValue, style: .Plain, target: self, action: #selector(DemoViewController.didTapButton(_:))),
-            UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil),
-            UIBarButtonItem(title: ActionTitle.Login.rawValue, style: .Plain, target: self, action: #selector(DemoViewController.didTapButton(_:))),
-            UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil),
+            UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
+            UIBarButtonItem(title: ActionTitle.alert.rawValue, style: .plain, target: self, action: #selector(DemoViewController.didTapButton(_:))),
+            UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
+            UIBarButtonItem(title: ActionTitle.actionSheet.rawValue, style: .plain, target: self, action: #selector(DemoViewController.didTapButton(_:))),
+            UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
+            UIBarButtonItem(title: ActionTitle.login.rawValue, style: .plain, target: self, action: #selector(DemoViewController.didTapButton(_:))),
+            UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
         ]
         
         self.navigationController?.setToolbarHidden(false, animated: false)
@@ -33,58 +33,60 @@ class DemoViewController: UIViewController {
         
     }
     
-    func didTapButton(sender: UIBarButtonItem){
+    func didTapButton(_ sender: UIBarButtonItem){
         
         guard let title = sender.title else {
             return
         }
         
-        if title == ActionTitle.Alert.rawValue {
-            ALRT.create(.Alert, title: "Error", message: "No item found")
-                .addOK()
-                .addAction("No Way!", preferred: true) // preferredAction is available iOS 9.0 or later
-                .show()
+        if let title = ActionTitle(rawValue: title) {
+            switch title {
+            case .alert:
+                ALRT.create(.alert, title: "Error", message: "No item found")
+                    .addOK()
+                    .addAction("No Way!", preferred: true) // preferredAction is available iOS 9.0 or later
+                    .show()
             
-        } else if title == ActionTitle.ActionSheet.rawValue {
-            
-            ALRT.create(.ActionSheet, title: "Destination", message: "Please select your destination")
-                .configurePopoverPresentation {
-                    // set popover.barButtonItem or popover.sourceView for iPad
-                    popover in
-                    popover?.barButtonItem = sender
-                }
-                .addAction("New York") { action, textFields in print("New York has been selected") }
-                .addAction("Paris")
-                .addAction("London")
-                .addDestructive("Not interested")
-                .show()
-       
-        } else if title == ActionTitle.Login.rawValue {
-            
-            ALRT.create(.Alert, title: "Login", message: "Please enter your credentials")
-                .addTextField { textField in
-                    textField.placeholder = "Username"
-                }
-                .addTextField { textField in
-                    textField.placeholder = "Password"
-                    textField.secureTextEntry = true
-                }
-                .addCancel()
-                .addOK() { alert, textFields in
-                    textFields?
-                        .flatMap { (placeholder: $0.placeholder ?? "No Placeholder", text: $0.text ?? "No Text") }
-                        .forEach { print("\($0.placeholder) => \($0.text)") }
-                }
-                .show(completion: { result in
-                    switch result {
-                    case .Success:
-                        print("The alert is displayed.")
-                        
-                    case .Failure(let error):
-                        print("The alert is not displayed. Error => \(error)")
+            case .actionSheet:
+                ALRT.create(.actionSheet, title: "Destination", message: "Please select your destination")
+                    .configurePopoverPresentation {
+                        // set popover.barButtonItem or popover.sourceView for iPad
+                        popover in
+                        popover?.barButtonItem = sender
                     }
-                })
+                    .addAction("New York") { action, textFields in print("New York has been selected") }
+                    .addAction("Paris")
+                    .addAction("London")
+                    .addDestructive("Not interested")
+                    .show()
+                
+            case .login:
+                ALRT.create(.alert, title: "Login", message: "Please enter your credentials")
+                    .addTextField { textField in
+                        textField.placeholder = "Username"
+                    }
+                    .addTextField { textField in
+                        textField.placeholder = "Password"
+                        textField.isSecureTextEntry = true
+                    }
+                    .addCancel()
+                    .addOK() { alert, textFields in
+                        textFields?
+                            .flatMap { (placeholder: $0.placeholder ?? "No Placeholder", text: $0.text ?? "No Text") }
+                            .forEach { print("\($0.placeholder) => \($0.text)") }
+                    }
+                    .show(completion: { result in
+                        switch result {
+                        case .success:
+                            print("The alert is displayed.")
+                            
+                        case .failure(let error):
+                            print("The alert is not displayed. Error => \(error)")
+                        }
+                    })
+            }
         }
+
     }
     
 }

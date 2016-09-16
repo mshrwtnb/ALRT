@@ -10,36 +10,38 @@ import UIKit
 /**
  Result indicating whether the alert is displayed or not.
  
- - Success: The alert is displayed.
- - Failure: The alert is not displayed due to some reasons.
+ - success: The alert is displayed.
+ - failure: The alert is not displayed due to some reasons.
  */
 
-public enum Result <ErrorType> {
-    case Success
-    case Failure(Error: ALRTError)
+public enum Result <ET> where ET: Error {
+    case success
+    case failure(Error: ET)
 }
 
 /**
  ALRTError enums.
  
- - AlertControllerNil: The alert controller is nil.
- - PopoverNotSet: An attempt to show .ActionSheet type alert controller failed because the popover presentation controller has not been set up.
+ - alertControllerNil: The alert controller is nil.
+ - popoverNotSet: An attempt to show .ActionSheet type alert controller failed because the popover presentation controller has not been set up.
+ - unknown: Unknown Error
  */
 
-public enum ALRTError: ErrorType {
-    case AlertControllerNil
-    case PopoverNotSet
+public enum ALRTError: Error {
+    case alertControllerNil
+    case popoverNotSet
+    case unknown
 }
 
 /// Responsible for creating and managing an ALRT object.
 
-public class ALRT {
+open class ALRT {
     
-    private var alert: UIAlertController?
+    fileprivate var alert: UIAlertController?
     
-    private init(){}
+    fileprivate init(){}
     
-    private init(title: String?, message: String?, preferredStyle: UIAlertControllerStyle){
+    fileprivate init(title: String?, message: String?, preferredStyle: UIAlertControllerStyle){
         self.alert = UIAlertController(title: title,
                                        message: message,
                                        preferredStyle: preferredStyle)
@@ -57,7 +59,7 @@ public class ALRT {
      - returns: ALRT
      */
     
-    public class func create(style: UIAlertControllerStyle,
+    open class func create(_ style: UIAlertControllerStyle,
                              title: String?,
                              message: String?) -> ALRT {
         
@@ -74,8 +76,8 @@ public class ALRT {
      - returns: Self
      */
     
-    public func fetch(handler: ((alertController: UIAlertController?) -> Void)) -> Self {
-        handler(alertController: self.alert)
+    open func fetch(_ handler: ((_ alertController: UIAlertController?) -> Void)) -> Self {
+        handler(self.alert)
         return self
     }
     
@@ -89,15 +91,15 @@ public class ALRT {
      - returns: Self
      */
     
-    public func addTextField(configurationHandler: ((textField: UITextField) -> Void)?) -> Self{
-        guard alert?.preferredStyle == .Alert else {
+    open func addTextField(_ configurationHandler: ((_ textField: UITextField) -> Void)?) -> Self{
+        guard alert?.preferredStyle == .alert else {
             return self
         }
         
-        alert?.addTextFieldWithConfigurationHandler {
+        alert?.addTextField {
             textField in
             if let configurationHandler = configurationHandler {
-                configurationHandler(textField: textField)
+                configurationHandler(textField)
             }
         }
         
@@ -117,13 +119,13 @@ public class ALRT {
      - returns: Self
      */
     
-    public func addAction(title: String?,
-                          style: UIAlertActionStyle = .Default,
+    open func addAction(_ title: String?,
+                          style: UIAlertActionStyle = .default,
                           preferred: Bool = false,
-                          handler: ((action: UIAlertAction, textFields: [UITextField]?) -> Void)? = nil) -> Self {
+                          handler: ((_ action: UIAlertAction, _ textFields: [UITextField]?) -> Void)? = nil) -> Self {
         
         let action = UIAlertAction(title: title, style: style){ action in
-            handler?(action: action, textFields: self.alert?.preferredStyle == .Alert ? self.alert?.textFields : nil)
+            handler?(action, self.alert?.preferredStyle == .alert ? self.alert?.textFields : nil)
             self.alert = nil
         }
         
@@ -151,10 +153,10 @@ public class ALRT {
      - returns: Self
      */
     
-    public func addOK(title: String = "OK",
-                      style: UIAlertActionStyle = .Default,
+    open func addOK(_ title: String = "OK",
+                      style: UIAlertActionStyle = .default,
                       preferred: Bool = false,
-                      handler:((action: UIAlertAction, textFields: [UITextField]?) -> Void)? = nil) -> Self {
+                      handler:((_ action: UIAlertAction, _ textFields: [UITextField]?) -> Void)? = nil) -> Self {
         
         return addAction(title, style: style, preferred: preferred, handler: handler)
     }
@@ -170,10 +172,10 @@ public class ALRT {
      - returns: Self
      */
     
-    public func addCancel(title: String = "Cancel",
-                          style: UIAlertActionStyle = .Cancel,
+    open func addCancel(_ title: String = "Cancel",
+                          style: UIAlertActionStyle = .cancel,
                           preferred: Bool = false,
-                          handler: ((action: UIAlertAction, textFields: [UITextField]?) -> Void)? = nil) -> Self {
+                          handler: ((_ action: UIAlertAction, _ textFields: [UITextField]?) -> Void)? = nil) -> Self {
         
         return addAction(title, style: style, preferred: preferred, handler: handler)
     }
@@ -189,10 +191,10 @@ public class ALRT {
      - returns: Self
      */
     
-    public func addDestructive(title: String?,
-                               style: UIAlertActionStyle = .Destructive,
+    open func addDestructive(_ title: String?,
+                               style: UIAlertActionStyle = .destructive,
                                preferred: Bool = false,
-                               handler: ((action: UIAlertAction, textFields: [UITextField]?) -> Void)? = nil)-> Self {
+                               handler: ((_ action: UIAlertAction, _ textFields: [UITextField]?) -> Void)? = nil)-> Self {
         
         return addAction(title, style: style, preferred: preferred, handler: handler)
     }
@@ -207,9 +209,9 @@ public class ALRT {
      - returns: Self
      */
     
-    public func configurePopoverPresentation(configurationHandler:((popover: UIPopoverPresentationController?) -> Void)? = nil) -> Self {
+    open func configurePopoverPresentation(_ configurationHandler:((_ popover: UIPopoverPresentationController?) -> Void)? = nil) -> Self {
         
-        configurationHandler?(popover:alert?.popoverPresentationController)
+        configurationHandler?(alert?.popoverPresentationController)
         
         return self
     }
@@ -224,34 +226,50 @@ public class ALRT {
      - parameter completion:     The block to execute after the presentation finishes. This block has no return value and takes an Result parameter. The default value is nil.
      */
     
-    public func show(viewControllerToPresent: UIViewController? = nil,
+    open func show(_ viewControllerToPresent: UIViewController? = nil,
                      animated: Bool = true,
-                     completion: ((result: Result<ALRTError>) -> Void)? = nil) {
+                     completion: ((_ result: Result<ALRTError>) -> Void)? = nil) {
+        
+        do {
+            try privateShow()
+        }
+        catch ALRTError.alertControllerNil {
+            completion?(.failure(Error: ALRTError.alertControllerNil))
+        }
+        catch ALRTError.popoverNotSet {
+            completion?(.failure(Error: ALRTError.popoverNotSet))
+        }
+        catch {
+            completion?(.failure(Error: ALRTError.unknown))
+        }
+    }
+    
+    fileprivate func privateShow(_ viewControllerToPresent: UIViewController? = nil,
+                             animated: Bool = true,
+                             completion: ((_ result: Result<ALRTError>) -> Void)? = nil) throws {
         
         guard let alert = self.alert else {
-            completion?(result: Result.Failure(Error: ALRTError.AlertControllerNil))
-            return
+            throw ALRTError.alertControllerNil
         }
         
-        if UIDevice.currentDevice().userInterfaceIdiom == .Pad &&
-            alert.preferredStyle == .ActionSheet &&
+        if UIDevice.current.userInterfaceIdiom == .pad &&
+            alert.preferredStyle == .actionSheet &&
             alert.popoverPresentationController?.sourceView == nil &&
             alert.popoverPresentationController?.barButtonItem == nil {
-            completion?(result: Result.Failure(Error: ALRTError.PopoverNotSet))
-            return
+            throw ALRTError.popoverNotSet
         }
         
         let sourceViewController: UIViewController? = {
-            let viewController = viewControllerToPresent ?? UIApplication.sharedApplication().keyWindow?.rootViewController
+            let viewController = viewControllerToPresent ?? UIApplication.shared.keyWindow?.rootViewController
             if let navigationController = viewController as? UINavigationController {
                 return navigationController.visibleViewController
             }
             return viewController
         }()
         
-        sourceViewController?.presentViewController(alert, animated: animated, completion: { _ in
-            completion?(result: Result.Success)
+        sourceViewController?.present(alert, animated: animated, completion: { _ in
+            completion?(Result.success)
         })
-        
+
     }
 }
