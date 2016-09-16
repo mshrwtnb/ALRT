@@ -9,7 +9,7 @@
 import UIKit
 
 class DemoViewController: UIViewController {
-    private enum ActionTitle: String {
+    fileprivate enum ActionTitle: String {
         case alert
         case actionSheet
         case login
