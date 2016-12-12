@@ -1,0 +1,5 @@
+language: objective-c
+os: osx
+osx_image: xcode8.1
+xcode_project: MyNewProject.xcodeproj # path to your xcodeproj folder
+xcode_scheme: MyNewProjectTests
