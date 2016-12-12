@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "ALRT"
-  s.version      = "0.4"
+  s.version      = "0.5"
   s.summary      = "ALRT is a call-site-friendly UIAlertController framework."
   s.description  = <<-DESC
                      ALRT aims to be an AL(R)Ternative to tedious UIAlertController implementation process.
