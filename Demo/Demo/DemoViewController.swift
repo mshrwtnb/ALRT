@@ -75,7 +75,7 @@ class DemoViewController: UIViewController {
                             .flatMap { (placeholder: $0.placeholder ?? "No Placeholder", text: $0.text ?? "No Text") }
                             .forEach { print("\($0.placeholder) => \($0.text)") }
                     }
-                    .show(completion: { result in
+                    .show { result in
                         switch result {
                         case .success:
                             print("The alert is displayed.")
@@ -83,7 +83,7 @@ class DemoViewController: UIViewController {
                         case .failure(let error):
                             print("The alert is not displayed. Error => \(error)")
                         }
-                    })
+                    }
             }
         }
 
