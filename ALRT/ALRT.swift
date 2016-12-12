@@ -268,33 +268,4 @@ open class ALRT {
             completion?(.failure(Error: ALRTError.unknown))
         }
     }
-    
-    fileprivate func privateShow(_ viewControllerToPresent: UIViewController? = nil,
-                             animated: Bool = true,
-                             completion: ((_ result: Result<ALRTError>) -> Void)? = nil) throws {
-        
-        guard let alert = self.alert else {
-            throw ALRTError.alertControllerNil
-        }
-        
-        if UIDevice.current.userInterfaceIdiom == .pad &&
-            alert.preferredStyle == .actionSheet &&
-            alert.popoverPresentationController?.sourceView == nil &&
-            alert.popoverPresentationController?.barButtonItem == nil {
-            throw ALRTError.popoverNotSet
-        }
-        
-        let sourceViewController: UIViewController? = {
-            let viewController = viewControllerToPresent ?? UIApplication.shared.keyWindow?.rootViewController
-            if let navigationController = viewController as? UINavigationController {
-                return navigationController.visibleViewController
-            }
-            return viewController
-        }()
-        
-        sourceViewController?.present(alert, animated: animated, completion: { _ in
-            completion?(Result.success)
-        })
-
-    }
 }
