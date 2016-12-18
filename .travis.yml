@@ -13,3 +13,6 @@ osx_image:
 
 script:
  - xcodebuild -workspace Demo/Demo.xcodeproj/project.xcworkspace -scheme "DemoUITests" -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 7,OS=10.2' test ENABLE_TESTABILITY=YES | xcpretty -c
+
+after_success:
+ - bash <(curl -s https://codecov.io/bash)
