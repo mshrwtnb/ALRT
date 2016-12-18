@@ -64,9 +64,11 @@ class DemoViewController: UIViewController {
                 ALRT.create(.alert, title: "Login", message: "Please enter your credentials")
                     .addTextField { textField in
                         textField.placeholder = "Username"
+                        textField.accessibilityIdentifier = "Username"
                     }
                     .addTextField { textField in
                         textField.placeholder = "Password"
+                        textField.accessibilityIdentifier = "Password"
                         textField.isSecureTextEntry = true
                     }
                     .addCancel()

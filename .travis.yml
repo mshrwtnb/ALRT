@@ -1,5 +1,15 @@
-language: objective-c
-os: osx
-osx_image: xcode8.1
-xcode_project: MyNewProject.xcodeproj # path to your xcodeproj folder
-xcode_scheme: MyNewProjectTests
+env:
+  global:
+    - LC_CTYPE=en_US.UTF-8
+
+language:
+ - objective-c
+
+os:
+ - osx
+
+osx_image:
+ - xcode8.2
+
+script:
+ - xcodebuild -workspace Demo/Demo.xcodeproj/project.xcworkspace -scheme "DemoUITests" -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 7,OS=10.2' test ENABLE_TESTABILITY=YES | xcpretty -c
