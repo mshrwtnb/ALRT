@@ -121,4 +121,4 @@ github "mshrwtnb/ALRT"
 ```
 
 ## Documentation
-* [Full Documentation](http://cocoadocs.org/docsets/ALRT/0.4/)
+* [Full Documentation](http://cocoadocs.org/docsets/ALRT/0.5/)
