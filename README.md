@@ -1,4 +1,4 @@
-[![Build Status](https://www.bitrise.io/app/a83365a50419cead.svg?token=CsJmpuGa23wFB_6FYmeHVg)](https://www.bitrise.io/app/a83365a50419cead)
+[![Build Status](https://travis-ci.org/mshrwtnb/ALRT.svg?branch=master)](https://travis-ci.org/mshrwtnb/ALRT)
 [![codecov](https://codecov.io/gh/mshrwtnb/ALRT/branch/master/graph/badge.svg)](https://codecov.io/gh/mshrwtnb/ALRT)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Cocoapods](https://img.shields.io/cocoapods/v/ALRT.svg?style=flat)](https://cocoapods.org/pods/ALRT)
