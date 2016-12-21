@@ -2,7 +2,7 @@ language: objective-c
 os: osx
 osx_image: xcode8.2
 script:
- - xcodebuild -workspace Demo/Demo.xcodeproj/project.xcworkspace -scheme "DemoUITests" -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 7,OS=10.2' test | xcpretty -c
+ - xcodebuild -workspace Demo/Demo.xcodeproj/project.xcworkspace -scheme "DemoUITests" -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 7,OS=10.2,id=E40727B3-41FB-4D6E-B4CB-BFA87109EB12' test | xcpretty -c
 
 after_success:
  - bash <(curl -s https://codecov.io/bash)
