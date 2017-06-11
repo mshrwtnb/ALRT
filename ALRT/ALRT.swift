@@ -1,41 +1,33 @@
-//
-//  ALRT.swift
-//
-//  Created by Masahiro Watanabe on 7/27/16.
-//  Copyright © 2016 Masahiro Watanabe. All rights reserved.
-//
-
 import UIKit
-
-/**
- Result indicating whether the alert is displayed or not.
- 
- - success: The alert is displayed.
- - failure: The alert is not displayed due to some reasons.
- */
-
-public enum Result <ET> where ET: Error {
-    case success
-    case failure(Error: ET)
-}
-
-/**
- ALRTError enums.
- 
- - alertControllerNil: The alert controller is nil.
- - popoverNotSet: An attempt to show .ActionSheet type alert controller failed because the popover presentation controller has not been set up.
- - unknown: Unknown Error
- */
-
-public enum ALRTError: Error {
-    case alertControllerNil
-    case popoverNotSet
-    case unknown
-}
 
 /// Responsible for creating and managing an ALRT object.
 
 open class ALRT {
+    
+    /**
+     Result indicating whether the alert is displayed or not.
+     
+     - success: The alert is displayed.
+     - failure: The alert is not displayed due to an ALRTError.
+     */
+    
+    public enum Result {
+        case success
+        case failure(ALRTError)
+    }
+    
+    /**
+     ALRTError enums.
+     
+     - alertControllerNil: The alert controller is nil.
+     - popoverNotSet: An attempt to show .ActionSheet type alert controller failed because the popover presentation controller has not been set up.
+     */
+    
+    public enum ALRTError: Error {
+        case alertControllerNil
+        case popoverNotSet
+        case sourceViewControllerNil
+    }
     
     fileprivate var alert: UIAlertController?
     
@@ -228,44 +220,36 @@ open class ALRT {
     
     open func show(_ viewControllerToPresent: UIViewController? = nil,
                      animated: Bool = true,
-                     completion: ((_ result: Result<ALRTError>) -> Void)? = nil) {
+                     completion: @escaping ((ALRT.Result) -> Void) = {_ in } ) {
         
-        do {
-            
-            guard
-                let alert = self.alert
-            else {
-                throw ALRTError.alertControllerNil
-            }
-            
-            if UIDevice.current.userInterfaceIdiom == .pad &&
-                alert.preferredStyle == .actionSheet &&
-                alert.popoverPresentationController?.sourceView == nil &&
-                alert.popoverPresentationController?.barButtonItem == nil {
-                throw ALRTError.popoverNotSet
-            }
-            
-            let sourceViewController: UIViewController? = {
-                let viewController = viewControllerToPresent ?? UIApplication.shared.keyWindow?.rootViewController
-                if let navigationController = viewController as? UINavigationController {
-                    return navigationController.visibleViewController
-                }
-                return viewController
-            }()
-            
-            sourceViewController?.present(alert, animated: animated) {  _ in
-                completion?(.success)
-            }
-            
+        guard let alert = self.alert else {
+            completion(.failure(.alertControllerNil))
+            return
         }
-        catch ALRTError.alertControllerNil {
-            completion?(.failure(Error: ALRTError.alertControllerNil))
+        
+        if UIDevice.current.userInterfaceIdiom == .pad &&
+            alert.preferredStyle == .actionSheet &&
+            alert.popoverPresentationController?.sourceView == nil &&
+            alert.popoverPresentationController?.barButtonItem == nil {
+            completion(.failure(.popoverNotSet))
+            return
         }
-        catch ALRTError.popoverNotSet {
-            completion?(.failure(Error: ALRTError.popoverNotSet))
-        }
-        catch {
-            completion?(.failure(Error: ALRTError.unknown))
+        
+        let sourceViewController: UIViewController? = {
+            let viewController = viewControllerToPresent ?? UIApplication.shared.keyWindow?.rootViewController
+            if let navigationController = viewController as? UINavigationController {
+                return navigationController.visibleViewController
+            }
+            return viewController
+        }()
+
+        if let sourceViewController = sourceViewController {
+            sourceViewController.present(alert, animated: animated) {  _ in
+                completion(.success)
+            }
+        } else {
+            completion(.failure(.sourceViewControllerNil))
         }
     }
+    
 }
