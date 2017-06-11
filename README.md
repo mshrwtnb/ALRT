@@ -6,20 +6,17 @@
 # ALRT
 <img width=600 src="https://raw.githubusercontent.com/wiki/mshrwtnb/ALRT/logobanner.png">
 
-ALRT is a call-site-friendly UIAlertController framework that aims to be an AL(R)Ternative to tedious UIAlertController implementation process.
-
-Similar snippets will no longer mess up your project.
+ALRT is an easy-to-create UIAlertController.
+It aims to be an AL(R)Ternative to tedious implementation process.
 
 ## Image
 <img height="300" src="https://media.giphy.com/media/26hirZS4wE6kwpCpy/giphy.gif">
 
-
 ## Features
-* Call-site-friendly. See Usages
-* Chainable UIAlertController setup both Alert and ActionSheet styles
-* Add UITextField(s) and handle their values when a certain UIAlertAction button is clicked
-* Preferred Action Support
-* Can handle the result of show() action both .Success and .Failure
+* Call-site-friendly. See Usages.
+* Chainable
+* Can add UITextField(s) and handle their values when a certain UIAlertAction button is clicked.
+* Can handle the result of show() action both .success and .failure
 
 ## Usages
 ### Alert with OK / Cancel buttons
