@@ -244,7 +244,7 @@ open class ALRT {
         }()
 
         if let sourceViewController = sourceViewController {
-            sourceViewController.present(alert, animated: animated) {  _ in
+            sourceViewController.present(alert, animated: animated) {
                 completion(.success)
             }
         } else {
