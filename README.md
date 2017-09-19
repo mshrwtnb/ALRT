@@ -1,121 +1,92 @@
-[![Build Status](https://travis-ci.org/mshrwtnb/ALRT.svg?branch=master)](https://travis-ci.org/mshrwtnb/ALRT)
-[![codecov](https://codecov.io/gh/mshrwtnb/ALRT/branch/master/graph/badge.svg)](https://codecov.io/gh/mshrwtnb/ALRT)
-[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
-[![Cocoapods](https://img.shields.io/cocoapods/v/ALRT.svg?style=flat)](https://cocoapods.org/pods/ALRT)
-
 # ALRT
-<img width=600 src="https://raw.githubusercontent.com/wiki/mshrwtnb/ALRT/logobanner.png">
+<img width=300 src="https://raw.githubusercontent.com/wiki/mshrwtnb/ALRT/logobanner.png">
 
-ALRT is an easy-to-create UIAlertController.
-It aims to be an AL(R)Ternative to tedious implementation process.
+ALRTは、UIAlertControllerをシンプルに呼び出すことができるライブラリです。   
+`.alert`, `.actionSheet`のどちらも簡単に作成、表示することができます。
 
-## Image
-<img src="https://media.giphy.com/media/26hirZS4wE6kwpCpy/giphy.gif">
+例
+```swift
+ALRT.create(.alert, title: "Show me some alert").addOK().addCancel().show()
+```
 
-## Features
-* Call-site-friendly. See Usages.
-* Chainable
-* Can add UITextField(s) and handle their values when a certain UIAlertAction button is clicked.
-* Can handle the result of show() action both .success and .failure
+## イメージ
+<img height=400 src="https://media.giphy.com/media/3ohhwqMEooV3s7lntm/giphy.gif">
 
-## Usages
-### Alert with OK / Cancel buttons
+## 特徴
+* ワンライナーでUIAlertControllerを作成、表示
+* UIAlertControllerStyle.alert, .actionSheetに対応
+* UIAlertControllerにUITextFieldを追加
+* 表示結果をResult型でハンドリング
 
+## 例
+### 例1 .alert表示
+ALRTを使わず、オーソドックスにUIAlertControllerを作成し、表示するにはこのようなコードが必要です。
+```swift
+let alertController = UIAlertController(title: "Show me some alert", message: nil, preferredStyle: .alert)
+
+let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+alertController.addAction(okAction)
+alertController.addAction(cancelAction)
+
+self.present(alertController, animated: true, completion: nil)
+```
+
+しかし、ALRTを使えば、これだけで済みます。
 ```swift
 import ALRT
-
-// alert without title/message
-ALRT.create(.alert)
-    .addOK()
-    .addCancel()
-    .show()
-
-// alert with title
-ALRT.create(.alert, title: "Title")
-    .addOK()
-    .addCancel()
-    .show()
-
-// alert with title and message
-ALRT.create(.alert, title: "Title", message: "Message")
-    .addOK()
-    .addCancel()
-    .show()
+ALRT.create(.alert, title: "Show me some alert").addOK().addCancel().show()
 ```
 
-### ActionSheet
-UIAlertControllerStyle.ActionSheet is supported.
+### 例2 .actionSheet表示、Actionタップをハンドリング
+UIAlertActionのタップハンドリングはTrailing Closureで行うことができます。   
+以下の例ではタップされるとメッセージがprintされます。
 
 ```swift
-ALRT.create(.actionSheet, title: "Choose your destination")
-    .configurePopoverPresentation {
-        // set popover.barButtonItem or popover.sourceView for iPad
-        popover in
-        popover?.barButtonItem = sender
-    }
-    .addAction("New York") { action, _ in
-        print("New York has been selected")
-    }
-    .addAction("Paris")
-    .addAction("London")
-    .addDestructive("None of the above")
-    .show()
+ALRT.create(.actionSheet, title: "ALRT", message: "Show me some action sheet")
+      .addAction("Option A") { _, _ in print("Option A has been tapped!") }
+      .addAction("Option B") { action, textfield in print("\(action.title!) has been tapped!") }
+      .addDestructive("Destructive Option")
+      .show()
 ```
-### Alert with two textfields
-UIAlertController.textFields can be accessed asynchronously right after the OK button is tapped.
-Also you are able to know if the alert or action sheet is displayed or not.
+
+## 例3 UIAlertControllerにUITextFieldを追加
+<img height=300 src="https://media.giphy.com/media/l378jFjtJQqJvSCSQ/giphy.gif">
+
+UIAlertControllerにUITextFieldを追加することもできます（例：ログイン）。   
+以下の例では、OKタップ時にUITextFieldの配列を回します。
+tagやUITextField変数をスコープ外に用意することで、UITextFieldのtextの取得が可能になります。
 
 ```swift
 ALRT.create(.alert, title: "Login", message: "Please enter your credentials")
     .addTextField { textField in
         textField.placeholder = "Username"
-        textField.accessibilityIdentifier = "Username"
     }
     .addTextField { textField in
         textField.placeholder = "Password"
-        textField.accessibilityIdentifier = "Password"
         textField.isSecureTextEntry = true
     }
     .addCancel()
-    .addOK() { alert, textFields in
-        textFields?
-            .flatMap { (placeholder: $0.placeholder ?? "No Placeholder", text: $0.text ?? "No Text") }
-            .forEach { print("\($0.placeholder) => \($0.text)") }
-    }
-    .show { result in
-        switch result {
-        case .success:
-            print("The alert is displayed.")
-
-        case .failure(let error):
-            print("The alert is not displayed. Error => \(error)")
+    .addOK() { _, textFields in
+        for textField in textFields ?? [] {
+            // ...
         }
     }
+    .show()
 ```
 
-## Requirements
-* Xcode 8.0 (Swift 3.0) or later
-* iOS 8.0 or later
+## 環境
+* Xcode 9.0
+* Swift 4.0
+* iOS 9.0以上
 
-## Installation
+## インストール方法
 ### Cocoapods
-Add to your Podfile and run pod install.
+Podfileに追加
 
 ```
-platform :ios, '8.0'
-
-target YOUR_TARGET do
-  use_frameworks!
-  pod "ALRT"
-end
+pod "ALRT"
 ```
 
-### Carthage
-Add to your Cartfile.
-
-```
-github "mshrwtnb/ALRT"
-```
-
-## Documentation
-* [Full Documentation](http://cocoadocs.org/docsets/ALRT/0.5/)
+## Multilanguages Documents
+English version can be found [here](https://github.com/mshrwtnb/ALRT/blob/swift4/README_en.md)
