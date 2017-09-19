@@ -10,16 +10,13 @@ class DemoViewController: UIViewController {
     }
     
     @IBAction func didTapAlertButton(_ sender: UIButton) {
-        ALRT.create(.alert, title: "Show me some alert")
-            .addOK()
-            .addCancel()
-            .show()
+        ALRT.create(.alert, title: "Show me some alert").addOK().addCancel().show()
     }
     
     @IBAction func didTapActionSheetButton(_ sender: UIButton) {
         ALRT.create(.actionSheet, title: "ALRT", message: "Show me some action sheet")
-            .addAction("Option A") { _ in print("Option A has been tapped!") }
-            .addAction("Option B") { _ in print("Option B has been tapped!") }
+            .addAction("Option A") { _, _ in print("Option A has been tapped!") }
+            .addAction("Option B") { action, textfield in print("\(action.title!) has been tapped!") }
             .addDestructive("Destructive Option")
             .show()
     }
