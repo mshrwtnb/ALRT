@@ -68,6 +68,7 @@ open class ALRT {
      - returns: Self
      */
     
+    @discardableResult
     open func fetch(_ handler: ((_ alertController: UIAlertController?) -> Void)) -> Self {
         handler(self.alert)
         return self
@@ -83,6 +84,7 @@ open class ALRT {
      - returns: Self
      */
     
+    @discardableResult
     open func addTextField(_ configurationHandler: ((_ textField: UITextField) -> Void)?) -> Self{
         guard alert?.preferredStyle == .alert else {
             return self
@@ -111,6 +113,7 @@ open class ALRT {
      - returns: Self
      */
     
+    @discardableResult
     open func addAction(_ title: String?,
                           style: UIAlertActionStyle = .default,
                           preferred: Bool = false,
@@ -145,6 +148,7 @@ open class ALRT {
      - returns: Self
      */
     
+    @discardableResult
     open func addOK(_ title: String = "OK",
                       style: UIAlertActionStyle = .default,
                       preferred: Bool = false,
@@ -164,6 +168,7 @@ open class ALRT {
      - returns: Self
      */
     
+    @discardableResult
     open func addCancel(_ title: String = "Cancel",
                           style: UIAlertActionStyle = .cancel,
                           preferred: Bool = false,
@@ -183,6 +188,7 @@ open class ALRT {
      - returns: Self
      */
     
+    @discardableResult
     open func addDestructive(_ title: String?,
                                style: UIAlertActionStyle = .destructive,
                                preferred: Bool = false,
@@ -201,6 +207,7 @@ open class ALRT {
      - returns: Self
      */
     
+    @discardableResult
     open func configurePopoverPresentation(_ configurationHandler:((_ popover: UIPopoverPresentationController?) -> Void)? = nil) -> Self {
         
         configurationHandler?(alert?.popoverPresentationController)
