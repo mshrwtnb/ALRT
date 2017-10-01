@@ -29,11 +29,11 @@ open class ALRT {
         case sourceViewControllerNil
     }
     
-    fileprivate var alert: UIAlertController?
+    var alert: UIAlertController?
     
     fileprivate init(){}
     
-    fileprivate init(title: String?, message: String?, preferredStyle: UIAlertControllerStyle){
+    fileprivate init(title: String?, message: String?, preferredStyle: UIAlertControllerStyle) {
         self.alert = UIAlertController(title: title,
                                        message: message,
                                        preferredStyle: preferredStyle)
@@ -68,6 +68,7 @@ open class ALRT {
      - returns: Self
      */
     
+    @discardableResult
     open func fetch(_ handler: ((_ alertController: UIAlertController?) -> Void)) -> Self {
         handler(self.alert)
         return self
@@ -83,6 +84,7 @@ open class ALRT {
      - returns: Self
      */
     
+    @discardableResult
     open func addTextField(_ configurationHandler: ((_ textField: UITextField) -> Void)?) -> Self{
         guard alert?.preferredStyle == .alert else {
             return self
@@ -111,22 +113,21 @@ open class ALRT {
      - returns: Self
      */
     
+    @discardableResult
     open func addAction(_ title: String?,
                           style: UIAlertActionStyle = .default,
                           preferred: Bool = false,
                           handler: ((_ action: UIAlertAction, _ textFields: [UITextField]?) -> Void)? = nil) -> Self {
         
-        let action = UIAlertAction(title: title, style: style){ action in
+        let action = UIAlertAction(title: title, style: style) { action in
             handler?(action, self.alert?.preferredStyle == .alert ? self.alert?.textFields : nil)
             self.alert = nil
         }
         
         alert?.addAction(action)
         
-        if #available(iOS 9.0, *) {
-            if preferred {
-                alert?.preferredAction = action
-            }
+        if preferred {
+            alert?.preferredAction = action
         }
         
         return self
@@ -145,6 +146,7 @@ open class ALRT {
      - returns: Self
      */
     
+    @discardableResult
     open func addOK(_ title: String = "OK",
                       style: UIAlertActionStyle = .default,
                       preferred: Bool = false,
@@ -164,6 +166,7 @@ open class ALRT {
      - returns: Self
      */
     
+    @discardableResult
     open func addCancel(_ title: String = "Cancel",
                           style: UIAlertActionStyle = .cancel,
                           preferred: Bool = false,
@@ -183,6 +186,7 @@ open class ALRT {
      - returns: Self
      */
     
+    @discardableResult
     open func addDestructive(_ title: String?,
                                style: UIAlertActionStyle = .destructive,
                                preferred: Bool = false,
@@ -201,6 +205,7 @@ open class ALRT {
      - returns: Self
      */
     
+    @discardableResult
     open func configurePopoverPresentation(_ configurationHandler:((_ popover: UIPopoverPresentationController?) -> Void)? = nil) -> Self {
         
         configurationHandler?(alert?.popoverPresentationController)
@@ -220,7 +225,7 @@ open class ALRT {
     
     open func show(_ viewControllerToPresent: UIViewController? = nil,
                      animated: Bool = true,
-                     completion: @escaping ((ALRT.Result) -> Void) = {_ in } ) {
+                     completion: @escaping ((ALRT.Result) -> Void) = { _ in } ) {
         
         guard let alert = self.alert else {
             completion(.failure(.alertControllerNil))
