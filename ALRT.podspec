@@ -1,12 +1,10 @@
 Pod::Spec.new do |s|
   s.name         = "ALRT"
-  s.version      = "0.6"
+  s.version      = "1.1"
   s.summary      = "ALRT is an easy-to-create UIAlertController framework."
   s.description  = <<-DESC
-                     * Easy-to-Create. as easy as 'ALRT.create(.alert).addOK().show()''
-                     * Chainable
-                     * Can add UITextField(s) and handle their values when a certain UIAlertAction button is clicked.
-                     * Can handle the result of show() action both .success and .failure
+                     * Easy-to-Create. As easy as 'ALRT.create(.alert).addOK().show()''
+                     * UITextField(s) can be added and handled.
                      DESC
 
   s.homepage     = "https://github.com/mshrwtnb/ALRT"
@@ -14,7 +12,7 @@ Pod::Spec.new do |s|
   s.license      = { :type => "MIT", :file => "LICENSE" }
   s.author             = { "Masahiro Watanabe" => "iammshr@gmail.com" }
   s.social_media_url   = "http://qiita.com/mshrwtnb"
-  s.platform     = :ios, "8.0"
+  s.platform     = :ios, "9.0"
   s.source       = { :git => "https://github.com/mshrwtnb/ALRT.git", :tag => "v#{s.version}" }
   s.source_files  = "ALRT/*.swift"
   s.requires_arc = true
