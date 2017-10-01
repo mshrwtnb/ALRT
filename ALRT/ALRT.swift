@@ -33,7 +33,7 @@ open class ALRT {
     
     fileprivate init(){}
     
-    fileprivate init(title: String?, message: String?, preferredStyle: UIAlertControllerStyle){
+    fileprivate init(title: String?, message: String?, preferredStyle: UIAlertControllerStyle) {
         self.alert = UIAlertController(title: title,
                                        message: message,
                                        preferredStyle: preferredStyle)
@@ -119,17 +119,15 @@ open class ALRT {
                           preferred: Bool = false,
                           handler: ((_ action: UIAlertAction, _ textFields: [UITextField]?) -> Void)? = nil) -> Self {
         
-        let action = UIAlertAction(title: title, style: style){ action in
+        let action = UIAlertAction(title: title, style: style) { action in
             handler?(action, self.alert?.preferredStyle == .alert ? self.alert?.textFields : nil)
             self.alert = nil
         }
         
         alert?.addAction(action)
         
-        if #available(iOS 9.0, *) {
-            if preferred {
-                alert?.preferredAction = action
-            }
+        if preferred {
+            alert?.preferredAction = action
         }
         
         return self
@@ -227,7 +225,7 @@ open class ALRT {
     
     open func show(_ viewControllerToPresent: UIViewController? = nil,
                      animated: Bool = true,
-                     completion: @escaping ((ALRT.Result) -> Void) = {_ in } ) {
+                     completion: @escaping ((ALRT.Result) -> Void) = { _ in } ) {
         
         guard let alert = self.alert else {
             completion(.failure(.alertControllerNil))
