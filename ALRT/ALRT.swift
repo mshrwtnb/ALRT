@@ -29,7 +29,7 @@ open class ALRT {
         case sourceViewControllerNil
     }
     
-    fileprivate var alert: UIAlertController?
+    var alert: UIAlertController?
     
     fileprivate init(){}
     
