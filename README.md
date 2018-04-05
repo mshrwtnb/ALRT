@@ -76,8 +76,8 @@ ALRT.create(.alert, title: "Login", message: "Please enter your credentials")
 ```
 
 ## 環境
-* Xcode 9.0
-* Swift 4.0
+* Xcode 9.3
+* Swift 4.1
 * iOS 9.0以上
 
 ## インストール方法
@@ -86,6 +86,11 @@ Podfileに追加
 
 ```
 pod "ALRT"
+```
+
+### Carthage
+```
+github "mshrwtnb/ALRT" ~> 1.2.0
 ```
 
 ## Multilanguages Documents
