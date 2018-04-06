@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "ALRT"
-  s.version      = "1.1"
+  s.version      = "1.2.0"
   s.summary      = "ALRT is an easy-to-create UIAlertController framework."
   s.description  = <<-DESC
                      * Easy-to-Create. As easy as 'ALRT.create(.alert).addOK().show()''
@@ -13,7 +13,7 @@ Pod::Spec.new do |s|
   s.author             = { "Masahiro Watanabe" => "iammshr@gmail.com" }
   s.social_media_url   = "http://qiita.com/mshrwtnb"
   s.platform     = :ios, "9.0"
-  s.source       = { :git => "https://github.com/mshrwtnb/ALRT.git", :tag => "v#{s.version}" }
+  s.source       = { :git => "https://github.com/mshrwtnb/ALRT.git", :tag => "#{s.version}" }
   s.source_files  = "ALRT/*.swift"
   s.requires_arc = true
 end
