@@ -1,7 +1,7 @@
 # ALRT
 <img width=300 src="https://raw.githubusercontent.com/wiki/mshrwtnb/ALRT/logobanner.png">
 
-ALRTは、UIAlertControllerをシンプルに呼び出すことができるライブラリです。   
+ALRTは、UIAlertControllerをシンプルに呼び出すことができるライブラリです。
 `.alert`, `.actionSheet`のどちらも簡単に作成、表示することができます。
 
 例
@@ -76,8 +76,8 @@ ALRT.create(.alert, title: "Login", message: "Please enter your credentials")
 ```
 
 ## 環境
-* Xcode 9.3
-* Swift 4.1
+* Xcode 10.0
+* Swift 4.2
 * iOS 9.0以上
 
 ## インストール方法
@@ -90,8 +90,8 @@ pod "ALRT"
 
 ### Carthage
 ```
-github "mshrwtnb/ALRT" ~> 1.2.0
+github "mshrwtnb/ALRT" ~> 1.3.0
 ```
 
 ## Multilanguages Documents
-English version can be found [here](https://github.com/mshrwtnb/ALRT/blob/swift4/README_en.md)
+English version can be found [here](https://github.com/mshrwtnb/ALRT/blob/master/README_en.md)
