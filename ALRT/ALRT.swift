@@ -33,7 +33,7 @@ open class ALRT {
     
     fileprivate init(){}
     
-    fileprivate init(title: String?, message: String?, preferredStyle: UIAlertControllerStyle) {
+    fileprivate init(title: String?, message: String?, preferredStyle: UIAlertController.Style) {
         self.alert = UIAlertController(title: title,
                                        message: message,
                                        preferredStyle: preferredStyle)
@@ -51,9 +51,9 @@ open class ALRT {
      - returns: ALRT
      */
     
-    open class func create(_ style: UIAlertControllerStyle,
-                             title: String? = nil,
-                             message: String? = nil) -> ALRT {
+    open class func create(_ style: UIAlertController.Style,
+                           title: String? = nil,
+                           message: String? = nil) -> ALRT {
         
         return ALRT(title: title, message: message, preferredStyle: style)
     }
@@ -85,7 +85,7 @@ open class ALRT {
      */
     
     @discardableResult
-    open func addTextField(_ configurationHandler: ((_ textField: UITextField) -> Void)?) -> Self{
+    open func addTextField(_ configurationHandler: ((_ textField: UITextField) -> Void)?) -> Self {
         guard alert?.preferredStyle == .alert else {
             return self
         }
@@ -115,9 +115,9 @@ open class ALRT {
     
     @discardableResult
     open func addAction(_ title: String?,
-                          style: UIAlertActionStyle = .default,
-                          preferred: Bool = false,
-                          handler: ((_ action: UIAlertAction, _ textFields: [UITextField]?) -> Void)? = nil) -> Self {
+                        style: UIAlertAction.Style = .default,
+                        preferred: Bool = false,
+                        handler: ((_ action: UIAlertAction, _ textFields: [UITextField]?) -> Void)? = nil) -> Self {
         
         let action = UIAlertAction(title: title, style: style) { action in
             handler?(action, self.alert?.preferredStyle == .alert ? self.alert?.textFields : nil)
@@ -148,9 +148,9 @@ open class ALRT {
     
     @discardableResult
     open func addOK(_ title: String = "OK",
-                      style: UIAlertActionStyle = .default,
-                      preferred: Bool = false,
-                      handler:((_ action: UIAlertAction, _ textFields: [UITextField]?) -> Void)? = nil) -> Self {
+                    style: UIAlertAction.Style = .default,
+                    preferred: Bool = false,
+                    handler:((_ action: UIAlertAction, _ textFields: [UITextField]?) -> Void)? = nil) -> Self {
         
         return addAction(title, style: style, preferred: preferred, handler: handler)
     }
@@ -168,9 +168,9 @@ open class ALRT {
     
     @discardableResult
     open func addCancel(_ title: String = "Cancel",
-                          style: UIAlertActionStyle = .cancel,
-                          preferred: Bool = false,
-                          handler: ((_ action: UIAlertAction, _ textFields: [UITextField]?) -> Void)? = nil) -> Self {
+                        style: UIAlertAction.Style = .cancel,
+                        preferred: Bool = false,
+                        handler: ((_ action: UIAlertAction, _ textFields: [UITextField]?) -> Void)? = nil) -> Self {
         
         return addAction(title, style: style, preferred: preferred, handler: handler)
     }
@@ -188,9 +188,9 @@ open class ALRT {
     
     @discardableResult
     open func addDestructive(_ title: String?,
-                               style: UIAlertActionStyle = .destructive,
-                               preferred: Bool = false,
-                               handler: ((_ action: UIAlertAction, _ textFields: [UITextField]?) -> Void)? = nil)-> Self {
+                             style: UIAlertAction.Style = .destructive,
+                             preferred: Bool = false,
+                             handler: ((_ action: UIAlertAction, _ textFields: [UITextField]?) -> Void)? = nil)-> Self {
         
         return addAction(title, style: style, preferred: preferred, handler: handler)
     }
@@ -224,8 +224,8 @@ open class ALRT {
      */
     
     open func show(_ viewControllerToPresent: UIViewController? = nil,
-                     animated: Bool = true,
-                     completion: @escaping ((ALRT.Result) -> Void) = { _ in } ) {
+                   animated: Bool = true,
+                   completion: @escaping ((ALRT.Result) -> Void) = { _ in } ) {
         
         guard let alert = self.alert else {
             completion(.failure(.alertControllerNil))
