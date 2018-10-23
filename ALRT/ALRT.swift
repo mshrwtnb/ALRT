@@ -241,7 +241,7 @@ open class ALRT {
         }
         
         let sourceViewController: UIViewController? = {
-            let viewController = viewControllerToPresent ?? UIApplication.shared.keyWindow?.rootViewController
+            let viewController = viewControllerToPresent ?? UIApplication.shared.topMostViewController()
             if let navigationController = viewController as? UINavigationController {
                 return navigationController.visibleViewController
             }
@@ -257,4 +257,29 @@ open class ALRT {
         }
     }
     
+}
+
+private extension UIViewController {
+    func topMostViewController() -> UIViewController {
+        
+        if let presented = self.presentedViewController {
+            return presented.topMostViewController()
+        }
+        
+        if let navigation = self as? UINavigationController {
+            return navigation.visibleViewController?.topMostViewController() ?? navigation
+        }
+        
+        if let tab = self as? UITabBarController {
+            return tab.selectedViewController?.topMostViewController() ?? tab
+        }
+        
+        return self
+    }
+}
+
+private extension UIApplication {
+    func topMostViewController() -> UIViewController? {
+        return self.keyWindow?.rootViewController?.topMostViewController()
+    }
 }
