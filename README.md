@@ -25,11 +25,12 @@ ALRT.create(.alert, title: "Alert?").addOK().addCancel().show()
 ## Installation
 ### Carthage
 ```
-github "mshrwtnb/ALRT" ~> 1.3.0
+github "mshrwtnb/ALRT" ~> 1.3.2
 ```
 ### Cocoapods
 ```
-pod "ALRT"
+pod repo update
+pod 'ALRT', '~> 1.3.2'
 ```
 ## License
 ALRT is released under the MIT license. [See LICENSE](https://github.com/mshrwtnb/ALRT/blob/master/LICENSE) for details.
