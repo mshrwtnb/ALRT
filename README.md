@@ -1,17 +1,17 @@
 <img src="https://raw.githubusercontent.com/wiki/mshrwtnb/ALRT/logobanner.png">
 An easier constructor for UIAlertController. Present from anywhere.
 
-- [Features](#features)
-- [Requirements](#requirements)
-- [Installation](#installation)
-- [Usage](https://github.com/mshrwtnb/ALRT/blob/master/Documentation/Usage.md)
-- [License](#license)
-
 ***Less Hustle, More Clarity***
 
 ```swift
 ALRT.create(.alert, title: "Alert?").addOK().addCancel().show()
 ```
+## Table of Contents
+- [Features](#features)
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Usage](https://github.com/mshrwtnb/ALRT/blob/master/Documentation/Usage.md)
+- [License](#license)
 
 ## Features
 * Chainable UIAlertController Setup Methods
