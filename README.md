@@ -1,5 +1,5 @@
 <img src="https://raw.githubusercontent.com/wiki/mshrwtnb/ALRT/logobanner.png">
-An easier constructor for UIAlertController. Present from anywhere.
+An easier constructor for UIAlertController. Present an alert from anywhere.
 
 ***Less Hustle, More Clarity***
 
