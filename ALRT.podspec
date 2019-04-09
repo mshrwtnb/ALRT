@@ -1,12 +1,7 @@
 Pod::Spec.new do |s|
   s.name         = "ALRT"
-  s.version      = "1.3.1"
-  s.summary      = "ALRT is an easy-to-create UIAlertController framework."
-  s.description  = <<-DESC
-                     * Easy-to-Create. As easy as 'ALRT.create(.alert).addOK().show()''
-                     * UITextField(s) can be added and handled.
-                     DESC
-
+  s.version      = "1.3.3"
+  s.summary      = "An easier constructor for UIAlertController. Present from anywhere."
   s.homepage     = "https://github.com/mshrwtnb/ALRT"
   s.screenshots  = "https://raw.githubusercontent.com/wiki/mshrwtnb/ALRT/logobanner.png"
   s.license      = { :type => "MIT", :file => "LICENSE" }
