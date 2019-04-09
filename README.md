@@ -19,18 +19,18 @@ ALRT.create(.alert, title: "Alert?").addOK().addCancel().show()
 * Support `UITextfield` UIAlertAction(`.alert` only)
 * Returns `Result` whether an alert is successfully displayed. In other words, [Unit Testable](https://github.com/mshrwtnb/ALRT/blob/master/Demo/DemoTests/DemoTests.swift).
 ## Requirements
-* Xcode 10.0+
-* Swift 4.2+
+* Xcode 10.2
+* Swift 5.0
 * iOS 9.0+
 ## Installation
 ### Carthage
 ```
-github "mshrwtnb/ALRT" ~> 1.3.2
+github "mshrwtnb/ALRT" ~> 1.3.3
 ```
 ### Cocoapods
 ```
 pod repo update
-pod 'ALRT', '~> 1.3.2'
+pod 'ALRT', '~> 1.3.3'
 ```
 ## License
 ALRT is released under the MIT license. [See LICENSE](https://github.com/mshrwtnb/ALRT/blob/master/LICENSE) for details.
