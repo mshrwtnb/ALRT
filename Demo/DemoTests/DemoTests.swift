@@ -20,20 +20,20 @@ class DemoTests: XCTestCase {
     }
     
     func testViewController() {
-        let exepecation = self.expectation(description: "wait for ALRT")
+        let expectation = self.expectation(description: "wait for ALRT")
         
         let test = TestViewController()
         
         test.showALRT { (result) in
             self.inspect(result)
-            exepecation.fulfill()
+            expectation.fulfill()
         }
         
         self.waitForExpectations(timeout: 3.0, handler: nil)
     }
 
     func testPresentedViewController() {
-        let exepecation = self.expectation(description: "wait for ALRT")
+        let expectation = self.expectation(description: "wait for ALRT")
         
         let first = TestViewController()
         let second = TestViewController()
@@ -41,28 +41,28 @@ class DemoTests: XCTestCase {
         
         second.showALRT { (result) in
             self.inspect(result)
-            exepecation.fulfill()
+            expectation.fulfill()
         }
         
         self.waitForExpectations(timeout: 3.0, handler: nil)
     }
     
     func testViewControllerEmbeddedInNavigationController() {
-        let exepecation = self.expectation(description: "wait for ALRT")
+        let expectation = self.expectation(description: "wait for ALRT")
         
         let test = TestViewController()
         _ = test.embedInNavigationController()
         
         test.showALRT { (result) in
             self.inspect(result)
-            exepecation.fulfill()
+            expectation.fulfill()
         }
         
         self.waitForExpectations(timeout: 3.0, handler: nil)
     }
     
     func testPushedViewController() {
-        let exepecation = self.expectation(description: "wait for ALRT")
+        let expectation = self.expectation(description: "wait for ALRT")
         
         let first = TestViewController().embedInNavigationController()
         let second = TestViewController()
@@ -70,7 +70,7 @@ class DemoTests: XCTestCase {
         
         second.showALRT { (result) in
             self.inspect(result)
-            exepecation.fulfill()
+            expectation.fulfill()
         }
         
         self.waitForExpectations(timeout: 3.0, handler: nil)
