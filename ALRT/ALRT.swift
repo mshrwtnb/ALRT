@@ -280,6 +280,9 @@ private extension UIViewController {
 
 private extension UIApplication {
     func topMostViewController() -> UIViewController? {
-        return self.keyWindow?.rootViewController?.topMostViewController()
+        guard let keyWindow = windows.last else {
+            return nil
+        }
+        return keyWindow.rootViewController?.topMostViewController()
     }
 }
