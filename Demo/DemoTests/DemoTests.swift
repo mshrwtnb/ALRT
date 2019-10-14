@@ -75,6 +75,32 @@ class DemoTests: XCTestCase {
         
         self.waitForExpectations(timeout: 3.0, handler: nil)
     }
+
+    func testTextField() {
+        let expectation = self.expectation(description: "addTextField should attach a textField to alert")
+
+        let expectedValue = "Test title"
+
+        ALRT.create(.alert, title: "Unit Test Alert")
+            .addTextField { (textField) in
+                textField.text = expectedValue
+            }
+           .fetch() { alert in
+                guard let textFields = alert?.textFields, textFields.count == 1 else {
+                    XCTFail("Textfields.count should be 1")
+                    return
+                }
+
+                guard let text = textFields.first?.text else {
+                    XCTFail("Attached textField should have text")
+                    return
+                }
+                XCTAssertEqual(text, expectedValue)
+                expectation.fulfill()
+           }
+
+        self.waitForExpectations(timeout: 3.0, handler: nil)
+    }
     
     func inspect(_ result: ALRT.Result) {
         if case .success = result {
