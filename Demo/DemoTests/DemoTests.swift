@@ -20,8 +20,8 @@ class DemoTests: XCTestCase {
     }
     
     func testViewController() {
-        let expectation = self.expectation(description: "wait for ALRT")
-        
+        let expectation = self.expectation(description: "ALRT should be shown from view controller")
+
         let test = TestViewController()
         
         test.showALRT { (result) in
@@ -33,7 +33,7 @@ class DemoTests: XCTestCase {
     }
 
     func testPresentedViewController() {
-        let expectation = self.expectation(description: "wait for ALRT")
+        let expectation = self.expectation(description: "ALRT should be shown from presented view controller")
         
         let first = TestViewController()
         let second = TestViewController()
@@ -48,7 +48,7 @@ class DemoTests: XCTestCase {
     }
     
     func testViewControllerEmbeddedInNavigationController() {
-        let expectation = self.expectation(description: "wait for ALRT")
+        let expectation = self.expectation(description: "ALRT should be shown from view controller in UINavigationController")
         
         let test = TestViewController()
         _ = test.embedInNavigationController()
@@ -62,7 +62,7 @@ class DemoTests: XCTestCase {
     }
     
     func testPushedViewController() {
-        let expectation = self.expectation(description: "wait for ALRT")
+        let expectation = self.expectation(description: "ALRT should be shown from pushed view controller")
         
         let first = TestViewController().embedInNavigationController()
         let second = TestViewController()
