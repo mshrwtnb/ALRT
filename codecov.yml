@@ -1,7 +1,0 @@
-coverage:
-  status:
-    project:
-      default: false
-      tests:
-        target: 75%
-        paths: "Demo/DemoTests/"
