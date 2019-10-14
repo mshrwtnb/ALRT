@@ -85,7 +85,7 @@ class DemoTests: XCTestCase {
     }
 }
 
-class TestViewController: UIViewController {
+fileprivate class TestViewController: UIViewController {
     func showALRT(_ completionHandler: @escaping (ALRT.Result) -> Void) {
         ALRT.create(.alert, title: "Unit Test Alert").addOK().show() {
             completionHandler($0)
