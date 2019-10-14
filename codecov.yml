@@ -1,0 +1,4 @@
+ignore:
+  - "Demo"
+  - "Documentation"
+  - "ALRT.xcodeproj"
