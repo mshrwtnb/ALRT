@@ -20,20 +20,20 @@ class DemoTests: XCTestCase {
     }
     
     func testViewController() {
-        let exepecation = self.expectation(description: "wait for ALRT")
-        
+        let expectation = self.expectation(description: "ALRT should be shown from view controller")
+
         let test = TestViewController()
         
         test.showALRT { (result) in
             self.inspect(result)
-            exepecation.fulfill()
+            expectation.fulfill()
         }
         
         self.waitForExpectations(timeout: 3.0, handler: nil)
     }
 
     func testPresentedViewController() {
-        let exepecation = self.expectation(description: "wait for ALRT")
+        let expectation = self.expectation(description: "ALRT should be shown from presented view controller")
         
         let first = TestViewController()
         let second = TestViewController()
@@ -41,28 +41,28 @@ class DemoTests: XCTestCase {
         
         second.showALRT { (result) in
             self.inspect(result)
-            exepecation.fulfill()
+            expectation.fulfill()
         }
         
         self.waitForExpectations(timeout: 3.0, handler: nil)
     }
     
     func testViewControllerEmbeddedInNavigationController() {
-        let exepecation = self.expectation(description: "wait for ALRT")
+        let expectation = self.expectation(description: "ALRT should be shown from view controller in UINavigationController")
         
         let test = TestViewController()
         _ = test.embedInNavigationController()
         
         test.showALRT { (result) in
             self.inspect(result)
-            exepecation.fulfill()
+            expectation.fulfill()
         }
         
         self.waitForExpectations(timeout: 3.0, handler: nil)
     }
     
     func testPushedViewController() {
-        let exepecation = self.expectation(description: "wait for ALRT")
+        let expectation = self.expectation(description: "ALRT should be shown from pushed view controller")
         
         let first = TestViewController().embedInNavigationController()
         let second = TestViewController()
@@ -70,9 +70,35 @@ class DemoTests: XCTestCase {
         
         second.showALRT { (result) in
             self.inspect(result)
-            exepecation.fulfill()
+            expectation.fulfill()
         }
         
+        self.waitForExpectations(timeout: 3.0, handler: nil)
+    }
+
+    func testTextField() {
+        let expectation = self.expectation(description: "addTextField should attach a textField to alert")
+
+        let expectedValue = "Test title"
+
+        ALRT.create(.alert, title: "Unit Test Alert")
+            .addTextField { (textField) in
+                textField.text = expectedValue
+            }
+           .fetch() { alert in
+                guard let textFields = alert?.textFields, textFields.count == 1 else {
+                    XCTFail("Textfields.count should be 1")
+                    return
+                }
+
+                guard let text = textFields.first?.text else {
+                    XCTFail("Attached textField should have text")
+                    return
+                }
+                XCTAssertEqual(text, expectedValue)
+                expectation.fulfill()
+           }
+
         self.waitForExpectations(timeout: 3.0, handler: nil)
     }
     
@@ -85,7 +111,7 @@ class DemoTests: XCTestCase {
     }
 }
 
-class TestViewController: UIViewController {
+fileprivate class TestViewController: UIViewController {
     func showALRT(_ completionHandler: @escaping (ALRT.Result) -> Void) {
         ALRT.create(.alert, title: "Unit Test Alert").addOK().show() {
             completionHandler($0)
