@@ -1,7 +1,13 @@
-<img src="https://raw.githubusercontent.com/wiki/mshrwtnb/ALRT/logobanner.png">
-An easier constructor for UIAlertController. Present an alert from anywhere.
+# ALRT
+<img src="https://app.bitrise.io/app/a83365a50419cead/status.svg?token=CsJmpuGa23wFB_6FYmeHVg&branch=master">
 
-***Less Hustle, More Clarity***
+<a href="https://codecov.io/gh/mshrwtnb/ALRT">
+  <img src="https://codecov.io/gh/mshrwtnb/ALRT/branch/master/graph/badge.svg" />
+</a>
+
+<img src="https://raw.githubusercontent.com/wiki/mshrwtnb/ALRT/logobanner.png">
+
+An easier constructor for UIAlertController. Present an alert from anywhere like this.
 
 ```swift
 ALRT.create(.alert, title: "Alert?").addOK().addCancel().show()
