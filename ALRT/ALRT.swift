@@ -28,7 +28,7 @@ public class ALRT {
         case sourceViewControllerNil
     }
 
-    var alert: UIAlertController?
+    var alertController: UIAlertController?
 
     private init() {}
 
@@ -37,7 +37,7 @@ public class ALRT {
         message: String?,
         preferredStyle: UIAlertController.Style
     ) {
-        alert = UIAlertController(
+        alertController = UIAlertController(
             title: title,
             message: message,
             preferredStyle: preferredStyle
@@ -76,7 +76,7 @@ public class ALRT {
 
     @discardableResult
     public func fetch(_ handler: (_ alertController: UIAlertController?) -> Void) -> Self {
-        handler(alert)
+        handler(alertController)
         return self
     }
 
@@ -92,11 +92,11 @@ public class ALRT {
 
     @discardableResult
     public func addTextField(_ configurationHandler: ((_ textField: UITextField) -> Void)?) -> Self {
-        guard alert?.preferredStyle == .alert else {
+        guard alertController?.preferredStyle == .alert else {
             return self
         }
 
-        alert?.addTextField { textField in
+        alertController?.addTextField { textField in
             if let configurationHandler = configurationHandler {
                 configurationHandler(textField)
             }
@@ -126,14 +126,14 @@ public class ALRT {
         handler: ((_ action: UIAlertAction, _ textFields: [UITextField]?) -> Void)? = nil
     ) -> Self {
         let action = UIAlertAction(title: title, style: style) { action in
-            handler?(action, self.alert?.preferredStyle == .alert ? self.alert?.textFields : nil)
-            self.alert = nil
+            handler?(action, self.alertController?.preferredStyle == .alert ? self.alertController?.textFields : nil)
+            self.alertController = nil
         }
 
-        alert?.addAction(action)
+        alertController?.addAction(action)
 
         if preferred {
-            alert?.preferredAction = action
+            alertController?.preferredAction = action
         }
 
         return self
@@ -215,7 +215,7 @@ public class ALRT {
 
     @discardableResult
     public func configurePopoverPresentation(_ configurationHandler: ((_ popover: UIPopoverPresentationController?) -> Void)? = nil) -> Self {
-        configurationHandler?(alert?.popoverPresentationController)
+        configurationHandler?(alertController?.popoverPresentationController)
         return self
     }
 
@@ -234,7 +234,7 @@ public class ALRT {
         animated: Bool = true,
         completion: @escaping ((ALRT.Result) -> Void) = { _ in }
     ) {
-        guard let alert = self.alert else {
+        guard let alert = self.alertController else {
             completion(.failure(.alertControllerNil))
             return
         }
