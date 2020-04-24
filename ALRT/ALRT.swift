@@ -2,7 +2,7 @@ import UIKit
 
 /// Responsible for creating and managing an ALRT object.
 
-open class ALRT {
+public class ALRT {
     
     /**
      Result indicating whether the alert is displayed or not.
@@ -51,7 +51,7 @@ open class ALRT {
      - returns: ALRT
      */
     
-    open class func create(_ style: UIAlertController.Style,
+    public class func create(_ style: UIAlertController.Style,
                            title: String? = nil,
                            message: String? = nil) -> ALRT {
         
@@ -69,7 +69,7 @@ open class ALRT {
      */
     
     @discardableResult
-    open func fetch(_ handler: ((_ alertController: UIAlertController?) -> Void)) -> Self {
+    public func fetch(_ handler: ((_ alertController: UIAlertController?) -> Void)) -> Self {
         handler(self.alert)
         return self
     }
@@ -85,7 +85,7 @@ open class ALRT {
      */
     
     @discardableResult
-    open func addTextField(_ configurationHandler: ((_ textField: UITextField) -> Void)?) -> Self {
+    public func addTextField(_ configurationHandler: ((_ textField: UITextField) -> Void)?) -> Self {
         guard alert?.preferredStyle == .alert else {
             return self
         }
@@ -114,7 +114,7 @@ open class ALRT {
      */
     
     @discardableResult
-    open func addAction(_ title: String?,
+    public func addAction(_ title: String?,
                         style: UIAlertAction.Style = .default,
                         preferred: Bool = false,
                         handler: ((_ action: UIAlertAction, _ textFields: [UITextField]?) -> Void)? = nil) -> Self {
@@ -147,7 +147,7 @@ open class ALRT {
      */
     
     @discardableResult
-    open func addOK(_ title: String = "OK",
+    public func addOK(_ title: String = "OK",
                     style: UIAlertAction.Style = .default,
                     preferred: Bool = false,
                     handler:((_ action: UIAlertAction, _ textFields: [UITextField]?) -> Void)? = nil) -> Self {
@@ -167,7 +167,7 @@ open class ALRT {
      */
     
     @discardableResult
-    open func addCancel(_ title: String = "Cancel",
+    public func addCancel(_ title: String = "Cancel",
                         style: UIAlertAction.Style = .cancel,
                         preferred: Bool = false,
                         handler: ((_ action: UIAlertAction, _ textFields: [UITextField]?) -> Void)? = nil) -> Self {
@@ -187,7 +187,7 @@ open class ALRT {
      */
     
     @discardableResult
-    open func addDestructive(_ title: String?,
+    public func addDestructive(_ title: String?,
                              style: UIAlertAction.Style = .destructive,
                              preferred: Bool = false,
                              handler: ((_ action: UIAlertAction, _ textFields: [UITextField]?) -> Void)? = nil)-> Self {
@@ -206,7 +206,7 @@ open class ALRT {
      */
     
     @discardableResult
-    open func configurePopoverPresentation(_ configurationHandler:((_ popover: UIPopoverPresentationController?) -> Void)? = nil) -> Self {
+    public func configurePopoverPresentation(_ configurationHandler:((_ popover: UIPopoverPresentationController?) -> Void)? = nil) -> Self {
         
         configurationHandler?(alert?.popoverPresentationController)
         
@@ -223,7 +223,7 @@ open class ALRT {
      - parameter completion:     The block to execute after the presentation finishes. This block has no return value and takes an Result parameter. The default value is nil.
      */
     
-    open func show(_ viewControllerToPresent: UIViewController? = nil,
+    public func show(_ viewControllerToPresent: UIViewController? = nil,
                    animated: Bool = true,
                    completion: @escaping ((ALRT.Result) -> Void) = { _ in } ) {
         
