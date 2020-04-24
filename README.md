@@ -26,19 +26,19 @@ ALRT.create(.alert, title: "Alert?").addOK().addCancel().show()
 * Returns `Result` whether an alert is successfully displayed. In other words, [Unit Testable](https://github.com/mshrwtnb/ALRT/blob/master/Demo/DemoTests/DemoTests.swift).
 
 ## Requirements
-* Xcode 10.2
+* Xcode 10.2+
 * Swift 5.0
 * iOS 9.0+
 
 ## Installation
 ### Carthage
 ```
-github "mshrwtnb/ALRT" ~> 1.3.4
+github "mshrwtnb/ALRT" ~> 1.3.5
 ```
 ### Cocoapods
 ```
 pod repo update
-pod 'ALRT', '~> 1.3.4'
+pod 'ALRT', '~> 1.3.5'
 ```
 
 ## Usage
@@ -155,6 +155,17 @@ Although ALRT can present an alert anywhere, you might want to specify a source 
 ALRT.create(.alert, title: "Source?")
     .addOK()
     .show(self) // self = source view controller
+```
+
+### Default Configuration
+Set default tintColor and titles for OK and Cancel buttons.
+
+```swift
+ALRT.defaultConfiguration = .init(
+    tintColor: UIColor.blue,
+    okTitle: "OK👍",
+    cancelTitle: "Cancel👎"
+)
 ```
 
 ## License

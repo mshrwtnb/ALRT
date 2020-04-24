@@ -101,7 +101,44 @@ class DemoTests: XCTestCase {
 
         self.waitForExpectations(timeout: 3.0, handler: nil)
     }
-    
+
+    func testDefaultConfiguration() {
+        defer {
+            ALRT.defaultConfiguration = nil
+        }
+
+        let expectation = self.expectation(description: "Setting defaultConfiguration should change tintColor, okTitle, cancelTitle")
+
+        let expectedTintColor = UIColor.red
+        let expectedOKTitle = "AAA"
+        let expectedCancelTitle = "BBB"
+
+        ALRT.defaultConfiguration = .init(
+            tintColor: expectedTintColor,
+            okTitle: expectedOKTitle,
+            cancelTitle: expectedCancelTitle
+        )
+
+        ALRT.create(.alert)
+            .addOK()
+            .addCancel()
+            .fetch { alert in
+                let actualTintColor = alert?.view.tintColor
+                XCTAssertEqual(actualTintColor, expectedTintColor)
+
+                let actualOKTitle = alert?.actions.first?.title
+                XCTAssertEqual(actualOKTitle, expectedOKTitle)
+
+                let actualCancelTitle = alert?.actions.last?.title
+                XCTAssertEqual(actualCancelTitle, expectedCancelTitle)
+
+                expectation.fulfill()
+            }
+            .show()
+
+        self.waitForExpectations(timeout: 3.0, handler: nil)
+    }
+
     func inspect(_ result: ALRT.Result) {
         if case .success = result {
             XCTAssertTrue(true)
