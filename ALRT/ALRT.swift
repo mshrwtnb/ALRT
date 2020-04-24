@@ -31,9 +31,9 @@ open class ALRT {
     
     var alert: UIAlertController?
     
-    fileprivate init(){}
+    private init(){}
     
-    fileprivate init(title: String?, message: String?, preferredStyle: UIAlertController.Style) {
+    private init(title: String?, message: String?, preferredStyle: UIAlertController.Style) {
         self.alert = UIAlertController(title: title,
                                        message: message,
                                        preferredStyle: preferredStyle)
