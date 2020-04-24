@@ -4,6 +4,16 @@ import UIKit
 
 public class ALRT {
     /**
+     Configuration struct to define default tintColor for buttons, ok button title and cancel button title.
+     Use `defaultConfiguration`
+     */
+    public struct Configuration {
+        public var tintColor: UIColor?
+        public var okTitle: String?
+        public var cancelTitle: String?
+    }
+
+    /**
      Result indicating whether the alert is displayed or not.
 
      - success: The alert is displayed.
@@ -28,7 +38,9 @@ public class ALRT {
         case sourceViewControllerNil
     }
 
-    var alertController: UIAlertController?
+    public static var defaultConfiguration: Configuration?
+
+    public var alertController: UIAlertController?
 
     private init() {}
 
@@ -37,11 +49,17 @@ public class ALRT {
         message: String?,
         preferredStyle: UIAlertController.Style
     ) {
-        alertController = UIAlertController(
+        let alertController = UIAlertController(
             title: title,
             message: message,
             preferredStyle: preferredStyle
         )
+
+        if let tintColor = ALRT.defaultConfiguration?.tintColor {
+            alertController.view.tintColor = tintColor
+        }
+
+        self.alertController = alertController
     }
 
     // MARK: Creating an ALRT
@@ -154,7 +172,7 @@ public class ALRT {
 
     @discardableResult
     public func addOK(
-        _ title: String = "OK",
+        _ title: String = ALRT.defaultConfiguration?.okTitle ?? "OK",
         style: UIAlertAction.Style = .default,
         preferred: Bool = false,
         handler: ((_ action: UIAlertAction, _ textFields: [UITextField]?) -> Void)? = nil
@@ -175,7 +193,7 @@ public class ALRT {
 
     @discardableResult
     public func addCancel(
-        _ title: String = "Cancel",
+        _ title: String = ALRT.defaultConfiguration?.cancelTitle ?? "Cancel",
         style: UIAlertAction.Style = .cancel,
         preferred: Bool = false,
         handler: ((_ action: UIAlertAction, _ textFields: [UITextField]?) -> Void)? = nil
@@ -234,7 +252,7 @@ public class ALRT {
         animated: Bool = true,
         completion: @escaping ((ALRT.Result) -> Void) = { _ in }
     ) {
-        guard let alert = self.alertController else {
+        guard let alert = alertController else {
             completion(.failure(.alertControllerNil))
             return
         }
@@ -255,12 +273,16 @@ public class ALRT {
             return viewController
         }()
 
-        if let sourceViewController = sourceViewController {
-            sourceViewController.present(alert, animated: animated) {
-                completion(.success)
-            }
-        } else {
+        guard let source = sourceViewController else {
             completion(.failure(.sourceViewControllerNil))
+            return
+        }
+
+        source.present(alert, animated: animated) {
+            if let tintColor = ALRT.defaultConfiguration?.tintColor {
+                alert.view.tintColor = tintColor
+            }
+            completion(.success)
         }
     }
 }
