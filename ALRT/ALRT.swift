@@ -11,6 +11,16 @@ public class ALRT {
         public var tintColor: UIColor?
         public var okTitle: String?
         public var cancelTitle: String?
+
+        public init(
+            tintColor: UIColor?,
+            okTitle: String?,
+            cancelTitle: String?
+        ) {
+            self.tintColor = tintColor
+            self.okTitle = okTitle
+            self.cancelTitle = cancelTitle
+        }
     }
 
     /**
