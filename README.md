@@ -33,12 +33,12 @@ ALRT.create(.alert, title: "Alert?").addOK().addCancel().show()
 ## Installation
 ### Carthage
 ```
-github "mshrwtnb/ALRT" ~> 1.3.5
+github "mshrwtnb/ALRT" ~> 1.3.6
 ```
 ### Cocoapods
 ```
 pod repo update
-pod 'ALRT', '~> 1.3.5'
+pod 'ALRT', '~> 1.3.6'
 ```
 
 ## Usage
