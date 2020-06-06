@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "ALRT"
-  s.version      = "1.3.6"
+  s.version      = "1.3.7"
   s.summary      = "An easier constructor for UIAlertController. Present from anywhere."
   s.homepage     = "https://github.com/mshrwtnb/ALRT"
   s.screenshots  = "https://raw.githubusercontent.com/wiki/mshrwtnb/ALRT/logobanner.png"
