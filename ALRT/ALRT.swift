@@ -317,7 +317,7 @@ private extension UIViewController {
 
 private extension UIApplication {
     func topMostViewController() -> UIViewController? {
-        guard let keyWindow = windows.last else {
+        guard let keyWindow = windows.first(where: { $0.isKeyWindow }) else {
             return nil
         }
         return keyWindow.rootViewController?.topMostViewController()
