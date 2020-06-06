@@ -15,6 +15,10 @@ class DemoViewController: UIViewController {
     
     @IBAction func didTapActionSheetButton(_ sender: UIButton) {
         ALRT.create(.actionSheet, title: "ALRT", message: "Show me some action sheet")
+            // for iPad
+            .configurePopoverPresentation { popover in
+                popover?.sourceView = sender
+            }
             .addAction("Option A") { _, _ in print("Option A has been tapped!") }
             .addAction("Option B") { action, textfield in print("\(action.title!) has been tapped!") }
             .addDestructive("Destructive Option")
